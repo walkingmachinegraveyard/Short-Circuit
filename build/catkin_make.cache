@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/wm/Short-Circuit/devel -DCMAKE_INSTALL_PREFIX=/home/wm/Short-Circuit/install -G Unix Makefiles
