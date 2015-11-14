@@ -1,0 +1,6 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~target_publishing_rate" : \b [double] The rate at which the incoming topic is forwarded. min: 0.0, default: 100.0, max: 500.0
+

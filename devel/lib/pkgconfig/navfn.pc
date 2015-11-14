@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: navfn
+Description: Description of navfn
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/devel/include -I/home/wm/Short-Circuit/src/navigation/navfn/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lnavfn
+Requires: nav_core roscpp pluginlib

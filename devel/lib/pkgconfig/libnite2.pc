@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: libnite2
+Description: Description of libnite2
+Version: 0.0.1
+Cflags: -I/home/wm/Short-Circuit/src/cob_people_perception/libnite2/common/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lNiTE2
+Requires: 

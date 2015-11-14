@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "face_detector")
+set(face_detector_MAINTAINER "Dan Lazewatsky <dan@lazewatsky.com>")
+set(face_detector_DEPRECATED "")
+set(face_detector_VERSION "1.0.10")
+set(face_detector_BUILD_DEPENDS "roscpp" "std_msgs" "geometry_msgs" "std_srvs" "cv_bridge" "stereo_msgs" "sensor_msgs" "tf" "rosbag" "image_transport" "people_msgs" "image_geometry" "actionlib_msgs" "actionlib" "message_generation" "roslib" "rospy")
+set(face_detector_RUN_DEPENDS "roscpp" "std_msgs" "geometry_msgs" "std_srvs" "cv_bridge" "stereo_msgs" "sensor_msgs" "tf" "rosbag" "image_transport" "people_msgs" "image_geometry" "actionlib_msgs" "actionlib" "message_runtime" "dynamic_reconfigure" "openni_launch" "roslib" "rospy")
+set(face_detector_BUILDTOOL_DEPENDS "catkin")

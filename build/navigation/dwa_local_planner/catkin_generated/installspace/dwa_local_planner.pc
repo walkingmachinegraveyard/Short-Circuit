@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/install
+
+Name: dwa_local_planner
+Description: Description of dwa_local_planner
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/install/include
+Libs: -L/home/wm/Short-Circuit/install/lib -ldwa_local_planner
+Requires: dynamic_reconfigure pluginlib roscpp

@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: people_tracking_filter
+Description: Description of people_tracking_filter
+Version: 1.0.10
+Cflags: -I/home/wm/Short-Circuit/src/people/people_tracking_filter/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lpeople_tracking_filter
+Requires: sensor_msgs std_msgs geometry_msgs people_msgs

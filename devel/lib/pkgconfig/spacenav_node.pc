@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: spacenav_node
+Description: Description of spacenav_node
+Version: 1.10.1
+Cflags: 
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: roscpp geometry_msgs sensor_msgs

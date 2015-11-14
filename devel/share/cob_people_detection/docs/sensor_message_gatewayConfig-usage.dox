@@ -1,0 +1,7 @@
+\subsubsection usage Usage
+\verbatim
+<node name="sensor_message_gateway" pkg="cob_people_detection" type="sensor_message_gateway">
+  <param name="target_publishing_rate" type="double" value="100.0" />
+</node>
+\endverbatim
+

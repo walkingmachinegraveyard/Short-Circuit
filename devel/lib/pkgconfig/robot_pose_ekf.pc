@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: robot_pose_ekf
+Description: Description of robot_pose_ekf
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/devel/include
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: roscpp

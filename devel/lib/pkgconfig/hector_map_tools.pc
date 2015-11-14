@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: hector_map_tools
+Description: Description of hector_map_tools
+Version: 0.3.4
+Cflags: -I/home/wm/Short-Circuit/src/hector_slam/hector_map_tools/include
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: nav_msgs

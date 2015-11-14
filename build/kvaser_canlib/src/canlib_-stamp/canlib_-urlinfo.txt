@@ -1,0 +1,3 @@
+repository='external project URL'
+module='http://www.kvaser.com/software/7330130980754/V5_3_0/linuxcan.tar.gz'
+tag='MD5=7d6d97266fd370d4233cbc1e0a917e82'

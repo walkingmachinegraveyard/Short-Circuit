@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/install
+
+Name: map_server
+Description: Description of map_server
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/install/include
+Libs: -L/home/wm/Short-Circuit/install/lib -lmap_server_image_loader
+Requires: roscpp tf nav_msgs

@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: fake_localization
+Description: Description of fake_localization
+Version: 1.13.1
+Cflags: 
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: roscpp rospy

@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: urg_node
+Description: Description of urg_node
+Version: 0.1.9
+Cflags: -I/home/wm/Short-Circuit/devel/include -I/home/wm/Short-Circuit/src/urg_node/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lurg_c_wrapper
+Requires: roscpp sensor_msgs urg_c rosconsole nodelet dynamic_reconfigure laser_proc

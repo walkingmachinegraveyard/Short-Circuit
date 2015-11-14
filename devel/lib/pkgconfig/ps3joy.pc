@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: ps3joy
+Description: Description of ps3joy
+Version: 1.10.1
+Cflags: 
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: diagnostic_msgs sensor_msgs rospy rosgraph

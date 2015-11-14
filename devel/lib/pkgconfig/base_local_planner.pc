@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: base_local_planner
+Description: Description of base_local_planner
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/devel/include -I/home/wm/Short-Circuit/src/navigation/base_local_planner/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lbase_local_planner -ltrajectory_planner_ros
+Requires: roscpp dynamic_reconfigure message_generation tf pluginlib costmap_2d nav_core angles

@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: cob_people_tracking_filter
+Description: Description of cob_people_tracking_filter
+Version: 1.0.4
+Cflags: -I/home/wm/Short-Circuit/src/cob_people_perception/cob_people_tracking_filter/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lcob_people_tracking_filter
+Requires: roscpp std_msgs geometry_msgs tf message_filters cob_perception_msgs sensor_msgs

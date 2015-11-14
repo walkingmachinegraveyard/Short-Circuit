@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "wm_static_tf")
+set(wm_static_tf_MAINTAINER "wm <wm@todo.todo>")
+set(wm_static_tf_DEPRECATED "")
+set(wm_static_tf_VERSION "0.0.0")
+set(wm_static_tf_BUILD_DEPENDS "roscpp" "rospy" "tf" "tf2")
+set(wm_static_tf_RUN_DEPENDS "roscpp" "rospy" "tf" "tf2")
+set(wm_static_tf_BUILDTOOL_DEPENDS "catkin")

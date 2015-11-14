@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: rotate_recovery
+Description: Description of rotate_recovery
+Version: 1.13.1
+Cflags: -I/home/wm/Short-Circuit/src/navigation/rotate_recovery/include
+Libs: -L/home/wm/Short-Circuit/devel/lib -lrotate_recovery
+Requires: roscpp pluginlib

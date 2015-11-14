@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: people_msgs
+Description: Description of people_msgs
+Version: 1.0.10
+Cflags: -I/home/wm/Short-Circuit/devel/include
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: message_runtime geometry_msgs std_msgs

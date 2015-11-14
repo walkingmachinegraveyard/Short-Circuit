@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "cob_people_tracking_filter")
+set(cob_people_tracking_filter_MAINTAINER "Richard Bormann <richard.bormann@ipa.fraunhofer.de>")
+set(cob_people_tracking_filter_DEPRECATED "")
+set(cob_people_tracking_filter_VERSION "1.0.4")
+set(cob_people_tracking_filter_BUILD_DEPENDS "cmake_modules" "roscpp" "std_msgs" "geometry_msgs" "tf" "message_filters" "cob_perception_msgs" "sensor_msgs" "bfl" "boost")
+set(cob_people_tracking_filter_RUN_DEPENDS "roscpp" "std_msgs" "geometry_msgs" "tf" "message_filters" "cob_perception_msgs" "sensor_msgs" "bfl" "boost")
+set(cob_people_tracking_filter_BUILDTOOL_DEPENDS "catkin")

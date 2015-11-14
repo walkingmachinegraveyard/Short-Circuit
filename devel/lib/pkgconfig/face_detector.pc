@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: face_detector
+Description: Description of face_detector
+Version: 1.0.10
+Cflags: -I/home/wm/Short-Circuit/devel/include -I/home/wm/Short-Circuit/src/people/face_detector/include
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: people_msgs geometry_msgs actionlib_msgs stereo_msgs sensor_msgs std_msgs message_runtime

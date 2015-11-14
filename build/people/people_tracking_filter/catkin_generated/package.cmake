@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "people_tracking_filter")
+set(people_tracking_filter_MAINTAINER "David V. Lu!! <davidvlu@gmail.com>")
+set(people_tracking_filter_DEPRECATED "")
+set(people_tracking_filter_VERSION "1.0.10")
+set(people_tracking_filter_BUILD_DEPENDS "roscpp" "std_msgs" "geometry_msgs" "tf" "bfl" "message_filters" "people_msgs" "sensor_msgs")
+set(people_tracking_filter_RUN_DEPENDS "roscpp" "std_msgs" "geometry_msgs" "tf" "bfl" "message_filters" "people_msgs" "sensor_msgs")
+set(people_tracking_filter_BUILDTOOL_DEPENDS "catkin")

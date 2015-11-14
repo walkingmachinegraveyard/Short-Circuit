@@ -1,0 +1,26 @@
+<package>
+ <name> kvaser_canlib </name>
+  <version>1.0.0</version>
+  <description>
+    Installs drivers and header files for Kvaser CAN cards.
+
+    Remember to add the canlib library for linking in dependent packages, e.g.:
+
+    add_executable(test.cpp src/test.cpp)
+    target_link_libraries(myexec canlib ${catkin_LIBRARIES})
+
+  </description>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/kvaser_canlib</url>
+
+  <maintainer email="fevb@kth.se">Francisco Vina</maintainer>
+  <author email="fevb@kth.se">Francisco Vina</author>
+
+
+
+  
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  
+</package>

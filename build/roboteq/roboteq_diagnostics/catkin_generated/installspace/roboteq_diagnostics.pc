@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/install
+
+Name: roboteq_diagnostics
+Description: Description of roboteq_diagnostics
+Version: 0.2.0
+Cflags: 
+Libs: -L/home/wm/Short-Circuit/install/lib 
+Requires: 

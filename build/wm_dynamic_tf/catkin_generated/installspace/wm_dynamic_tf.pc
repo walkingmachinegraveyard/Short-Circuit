@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/install
+
+Name: wm_dynamic_tf
+Description: Description of wm_dynamic_tf
+Version: 0.0.0
+Cflags: -I/home/wm/Short-Circuit/install/include
+Libs: -L/home/wm/Short-Circuit/install/lib 
+Requires: geometry_msgs roscpp rospy sensor_msgs tf2 tf2_ros

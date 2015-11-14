@@ -1,0 +1,2 @@
+/usr/bin/ar cr /home/wm/Short-Circuit/devel/lib/libroboteq_driver_script.a  CMakeFiles/roboteq_driver_script.dir/genc_script_hex.cpp.o
+/usr/bin/ranlib /home/wm/Short-Circuit/devel/lib/libroboteq_driver_script.a

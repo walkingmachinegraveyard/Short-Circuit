@@ -291,3 +291,181 @@ Linking C executable cmTryCompileExec508724003
 make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
 
 
+Determining if the Q_WS_X11 exist passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1388805093/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1388805093.dir/build.make CMakeFiles/cmTryCompileExec1388805093.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1388805093.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -I/usr/include/qt4    -o CMakeFiles/cmTryCompileExec1388805093.dir/CheckSymbolExists.cxx.o -c /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTryCompileExec1388805093
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1388805093.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTryCompileExec1388805093.dir/CheckSymbolExists.cxx.o  -o cmTryCompileExec1388805093 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+File /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_X11
+  return ((int*)(&Q_WS_X11))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if files linux/joystick.h exist passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec983496667/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec983496667.dir/build.make CMakeFiles/cmTryCompileExec983496667.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec983496667.dir/CheckIncludeFiles.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec983496667.dir/CheckIncludeFiles.c.o   -c /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec983496667
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec983496667.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec983496667.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec983496667 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function XOpenDisplay exists in the /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1748787323/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1748787323.dir/build.make CMakeFiles/cmTryCompileExec1748787323.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1748787323.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTryCompileExec1748787323.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1748787323
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1748787323.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTryCompileExec1748787323.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1748787323 -rdynamic -lX11 -lXext 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function gethostbyname exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec637736720/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec637736720.dir/build.make CMakeFiles/cmTryCompileExec637736720.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec637736720.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTryCompileExec637736720.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec637736720
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec637736720.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTryCompileExec637736720.dir/CheckFunctionExists.c.o  -o cmTryCompileExec637736720 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function connect exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1124879698/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1124879698.dir/build.make CMakeFiles/cmTryCompileExec1124879698.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1124879698.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTryCompileExec1124879698.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1124879698
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1124879698.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTryCompileExec1124879698.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1124879698 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function remove exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1667338094/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1667338094.dir/build.make CMakeFiles/cmTryCompileExec1667338094.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1667338094.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTryCompileExec1667338094.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1667338094
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1667338094.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTryCompileExec1667338094.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1667338094 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function shmat exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec3986461074/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3986461074.dir/build.make CMakeFiles/cmTryCompileExec3986461074.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3986461074.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTryCompileExec3986461074.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3986461074
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3986461074.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTryCompileExec3986461074.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3986461074 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1214811651/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1214811651.dir/build.make CMakeFiles/cmTryCompileExec1214811651.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1214811651.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTryCompileExec1214811651.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1214811651
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1214811651.dir/link.txt --verbose=1
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTryCompileExec1214811651.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1214811651 -rdynamic -lICE 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+Determining if the include file FL/Fl.H exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1118763936/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1118763936.dir/build.make CMakeFiles/cmTryCompileExec1118763936.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1118763936.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -Wno-deprecated    -o CMakeFiles/cmTryCompileExec1118763936.dir/CheckIncludeFile.cxx.o -c /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+Linking CXX executable cmTryCompileExec1118763936
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1118763936.dir/link.txt --verbose=1
+/usr/bin/c++     -Wno-deprecated     CMakeFiles/cmTryCompileExec1118763936.dir/CheckIncludeFile.cxx.o  -o cmTryCompileExec1118763936 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file pgm.h exists passed with the following output:
+Change Dir: /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2699099055/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2699099055.dir/build.make CMakeFiles/cmTryCompileExec2699099055.dir/build
+make[1]: Entering directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2699099055.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -Wno-deprecated    -o CMakeFiles/cmTryCompileExec2699099055.dir/CheckIncludeFile.cxx.o -c /home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+Linking CXX executable cmTryCompileExec2699099055
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2699099055.dir/link.txt --verbose=1
+/usr/bin/c++     -Wno-deprecated     CMakeFiles/cmTryCompileExec2699099055.dir/CheckIncludeFile.cxx.o  -o cmTryCompileExec2699099055 -rdynamic 
+make[1]: Leaving directory `/home/wm/Short-Circuit/build/CMakeFiles/CMakeTmp'
+
+
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64
+The target system is: Linux - 3.13.0-65-generic - x86_64
+The host system is: Linux - 3.19.0-33-generic - x86_64

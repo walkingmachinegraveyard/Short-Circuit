@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "wm_dynamic_tf")
+set(wm_dynamic_tf_MAINTAINER "wm <wm@todo.todo>")
+set(wm_dynamic_tf_DEPRECATED "")
+set(wm_dynamic_tf_VERSION "0.0.0")
+set(wm_dynamic_tf_BUILD_DEPENDS "geometry_msgs" "roscpp" "rospy" "sensor_msgs" "tf2" "tf2_ros")
+set(wm_dynamic_tf_RUN_DEPENDS "geometry_msgs" "roscpp" "rospy" "sensor_msgs" "tf2" "tf2_ros")
+set(wm_dynamic_tf_BUILDTOOL_DEPENDS "catkin")

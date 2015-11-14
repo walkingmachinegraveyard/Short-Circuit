@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/devel
+
+Name: hector_map_server
+Description: Description of hector_map_server
+Version: 0.3.4
+Cflags: 
+Libs: -L/home/wm/Short-Circuit/devel/lib 
+Requires: 
