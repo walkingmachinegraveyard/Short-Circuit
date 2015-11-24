@@ -1,0 +1,96 @@
+<robot
+  name="ASM_BASE_TEMPORAIRE.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.35773 -4.0529 3.0873"
+        rpy="0 0 0" />
+      <mass
+        value="37.238" />
+      <inertia
+        ixx="1.0046"
+        ixy="3.9425E-06"
+        ixz="-0.0034778"
+        iyy="2.4336"
+        iyz="1.1773E-05"
+        izz="1.4848" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ASM_BASE_TEMPORAIRE.SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ASM_BASE_TEMPORAIRE.SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="laser_Link">
+    <inertial>
+      <origin
+        xyz="0.000108334253726076 0.0387789680553077 -3.72795389935732E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.240152884055235" />
+      <inertia
+        ixx="0.00021767849947433"
+        ixy="-8.02991880089284E-07"
+        ixz="-4.17195272299676E-08"
+        iyy="0.000119875713246722"
+        iyz="2.75467478903389E-08"
+        izz="0.000218518123535949" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ASM_BASE_TEMPORAIRE.SLDASM/meshes/laser_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ASM_BASE_TEMPORAIRE.SLDASM/meshes/laser_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="laser_Joint"
+    type="fixed">
+    <origin
+      xyz="0.050175 -3.0878 -4.0275"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="laser_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
