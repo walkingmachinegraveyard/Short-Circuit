@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: global_planner
-Description: Description of global_planner
-Version: 1.13.1
-Cflags: -I/home/wm/Short-Circuit/install/include
-Libs: -L/home/wm/Short-Circuit/install/lib -lglobal_planner
-Requires: costmap_2d dynamic_reconfigure geometry_msgs nav_core navfn nav_msgs pluginlib roscpp tf

@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: hector_compressed_map_transport
-Description: Description of hector_compressed_map_transport
-Version: 0.3.4
-Cflags: 
-Libs: -L/home/wm/Short-Circuit/devel/lib 
-Requires: 

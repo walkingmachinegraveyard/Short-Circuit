@@ -1,3 +1,0 @@
-module=canlib
-version=5_3_504
-hgid=be10f0e667f2 tip

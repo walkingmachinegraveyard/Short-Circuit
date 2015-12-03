@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "kvaser_canlib")
-set(kvaser_canlib_MAINTAINER "Francisco Vina <fevb@kth.se>")
-set(kvaser_canlib_DEPRECATED "")
-set(kvaser_canlib_VERSION "1.0.0")
-set(kvaser_canlib_BUILD_DEPENDS )
-set(kvaser_canlib_RUN_DEPENDS )
-set(kvaser_canlib_BUILDTOOL_DEPENDS "catkin")

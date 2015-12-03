@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "cob_openni2_tracker")
-set(cob_openni2_tracker_MAINTAINER "Richard Bormann <richard.bormann@ipa.fraunhofer.de>")
-set(cob_openni2_tracker_DEPRECATED "")
-set(cob_openni2_tracker_VERSION "0.1.0")
-set(cob_openni2_tracker_BUILD_DEPENDS "cmake_modules" "libusb-1.0-dev" "libopenni-sensor-primesense-dev" "geometry_msgs" "sensor_msgs" "orocos_kdl" "roscpp" "roslib" "visualization_msgs" "tf" "cob_perception_msgs" "libopenni2-dev" "libnite2" "nodelet" "pcl_ros" "image_transport" "cv_bridge" "std_msgs" "libopencv-dev" "glut" "opengl")
-set(cob_openni2_tracker_RUN_DEPENDS "libusb-1.0-dev" "libopenni-sensor-primesense-dev" "geometry_msgs" "sensor_msgs" "orocos_kdl" "roscpp" "roslib" "visualization_msgs" "tf" "cob_perception_msgs" "message_runtime" "libopenni2-dev" "libnite2" "nodelet" "pcl_ros" "image_transport" "cv_bridge" "std_msgs" "libopencv-dev" "boost" "glut" "opengl")
-set(cob_openni2_tracker_BUILDTOOL_DEPENDS "catkin")

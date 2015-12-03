@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "amcl")
-set(amcl_MAINTAINER "David V. Lu!! <davidvlu@gmail.com>, Michael Ferguson <mferguson@fetchrobotics.com>")
-set(amcl_DEPRECATED "")
-set(amcl_VERSION "1.13.1")
-set(amcl_BUILD_DEPENDS "dynamic_reconfigure" "message_filters" "nav_msgs" "roscpp" "rostest" "std_srvs" "tf")
-set(amcl_RUN_DEPENDS "roscpp" "dynamic_reconfigure" "tf" "nav_msgs")
-set(amcl_BUILDTOOL_DEPENDS "catkin")

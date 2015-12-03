@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: rosserial_mbed
-Description: Description of rosserial_mbed
-Version: 0.7.1
-Cflags: -I/home/wm/Short-Circuit/install/include
-Libs: -L/home/wm/Short-Circuit/install/lib 
-Requires: message_runtime

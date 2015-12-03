@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "libnite2")
-set(libnite2_MAINTAINER "Richard Bormann <richard.bormann@ipa.fraunhofer.de>")
-set(libnite2_DEPRECATED "")
-set(libnite2_VERSION "0.0.1")
-set(libnite2_BUILD_DEPENDS )
-set(libnite2_RUN_DEPENDS )
-set(libnite2_BUILDTOOL_DEPENDS "catkin")

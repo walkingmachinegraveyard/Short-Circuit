@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "wm_odometry_feedback")
-set(wm_odometry_feedback_MAINTAINER "xhache <xhache@todo.todo>")
-set(wm_odometry_feedback_DEPRECATED "")
-set(wm_odometry_feedback_VERSION "0.0.0")
-set(wm_odometry_feedback_BUILD_DEPENDS "geometry_msgs" "message_filters" "nav_msgs" "roboteq_msgs" "roscpp" "tf2" "tf2_ros")
-set(wm_odometry_feedback_RUN_DEPENDS "geometry_msgs" "message_filters" "nav_msgs" "roboteq_msgs" "roscpp" "tf2" "tf2_ros")
-set(wm_odometry_feedback_BUILDTOOL_DEPENDS "catkin")

@@ -1,1 +1,0 @@
-cmd_/home/wm/Short-Circuit/build/kvaser_canlib/src/canlib_/usbcanII/usbcanII.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/wm/Short-Circuit/build/kvaser_canlib/src/canlib_/usbcanII/usbcanII.ko /home/wm/Short-Circuit/build/kvaser_canlib/src/canlib_/usbcanII/usbcanII.o /home/wm/Short-Circuit/build/kvaser_canlib/src/canlib_/usbcanII/usbcanII.mod.o

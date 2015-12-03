@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: carrot_planner
-Description: Description of carrot_planner
-Version: 1.13.1
-Cflags: -I/home/wm/Short-Circuit/src/navigation/carrot_planner/include
-Libs: -L/home/wm/Short-Circuit/devel/lib -lcarrot_planner
-Requires: roscpp pluginlib costmap_2d base_local_planner nav_core

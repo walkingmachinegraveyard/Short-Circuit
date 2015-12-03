@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: cob_people_detection
-Description: Description of cob_people_detection
-Version: 1.0.0
-Cflags: -I/home/wm/Short-Circuit/install/include -I/usr/local/include/opencv -I/usr/local/include -I/usr/include
-Libs: -L/home/wm/Short-Circuit/install/lib -lsubspace_analysis -ldecomposition -lface_normalizer -lface_recognizer_algorithms -lsensor_message_gateway_nodelet -l:/usr/local/lib/libopencv_videostab.so.2.4.11 -l:/usr/local/lib/libopencv_video.so.2.4.11 -l:/usr/local/lib/libopencv_superres.so.2.4.11 -l:/usr/local/lib/libopencv_stitching.so.2.4.11 -l:/usr/local/lib/libopencv_photo.so.2.4.11 -l:/usr/local/lib/libopencv_ocl.so.2.4.11 -l:/usr/local/lib/libopencv_objdetect.so.2.4.11 -l:/usr/local/lib/libopencv_nonfree.so.2.4.11 -l:/usr/local/lib/libopencv_ml.so.2.4.11 -l:/usr/local/lib/libopencv_legacy.so.2.4.11 -l:/usr/local/lib/libopencv_imgproc.so.2.4.11 -l:/usr/local/lib/libopencv_highgui.so.2.4.11 -l:/usr/local/lib/libopencv_gpu.so.2.4.11 -l:/usr/local/lib/libopencv_flann.so.2.4.11 -l:/usr/local/lib/libopencv_features2d.so.2.4.11 -l:/usr/local/lib/libopencv_core.so.2.4.11 -l:/usr/local/lib/libopencv_contrib.so.2.4.11 -l:/usr/local/lib/libopencv_calib3d.so.2.4.11 -l:/usr/lib/x86_64-linux-gnu/libboost_signals.so -l:/usr/lib/x86_64-linux-gnu/libboost_system.so -l:/usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-Requires: roscpp std_msgs std_srvs actionlib sensor_msgs actionlib_msgs geometry_msgs stereo_msgs image_transport image_geometry image_view tf nodelet dynamic_reconfigure pcl_ros cv_bridge cob_image_flip cob_vision_utils cob_perception_msgs message_runtime

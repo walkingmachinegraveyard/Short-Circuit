@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "wm_mecanum_cmd")
-set(wm_mecanum_cmd_MAINTAINER "xhache <xhache@todo.todo>")
-set(wm_mecanum_cmd_DEPRECATED "")
-set(wm_mecanum_cmd_VERSION "0.0.0")
-set(wm_mecanum_cmd_BUILD_DEPENDS "geometry_msgs" "roboteq_msgs" "rospy" "sensor_msgs")
-set(wm_mecanum_cmd_RUN_DEPENDS "geometry_msgs" "roboteq_msgs" "rospy" "sensor_msgs")
-set(wm_mecanum_cmd_BUILDTOOL_DEPENDS "catkin")

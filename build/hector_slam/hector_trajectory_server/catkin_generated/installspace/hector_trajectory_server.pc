@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: hector_trajectory_server
-Description: Description of hector_trajectory_server
-Version: 0.3.4
-Cflags: 
-Libs: -L/home/wm/Short-Circuit/install/lib 
-Requires: 

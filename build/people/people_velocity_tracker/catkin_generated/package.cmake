@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "people_velocity_tracker")
-set(people_velocity_tracker_MAINTAINER "David V. Lu!! <davidvlu@gmail.com>")
-set(people_velocity_tracker_DEPRECATED "")
-set(people_velocity_tracker_VERSION "1.0.10")
-set(people_velocity_tracker_BUILD_DEPENDS "geometry_msgs" "people_msgs" "easy_markers" "kalman_filter" "roslib" "rospy")
-set(people_velocity_tracker_RUN_DEPENDS "geometry_msgs" "people_msgs" "rospy" "easy_markers" "leg_detector" "kalman_filter" "roslib")
-set(people_velocity_tracker_BUILDTOOL_DEPENDS "catkin")

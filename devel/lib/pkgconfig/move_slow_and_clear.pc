@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: move_slow_and_clear
-Description: Description of move_slow_and_clear
-Version: 1.13.1
-Cflags: -I/home/wm/Short-Circuit/src/navigation/move_slow_and_clear/include
-Libs: -L/home/wm/Short-Circuit/devel/lib -lmove_slow_and_clear
-Requires: roscpp pluginlib nav_core

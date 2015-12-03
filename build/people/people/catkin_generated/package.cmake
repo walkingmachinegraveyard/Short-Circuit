@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "people")
-set(people_MAINTAINER "Dan Lazewatsky <dan@lazewatsky.com>")
-set(people_DEPRECATED "")
-set(people_VERSION "1.0.10")
-set(people_BUILD_DEPENDS )
-set(people_RUN_DEPENDS "people_msgs" "face_detector" "leg_detector" "people_tracking_filter" "people_velocity_tracker")
-set(people_BUILDTOOL_DEPENDS "catkin")

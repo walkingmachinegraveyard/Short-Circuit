@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: nav_core
-Description: Description of nav_core
-Version: 1.13.1
-Cflags: -I/home/wm/Short-Circuit/src/navigation/nav_core/include
-Libs: -L/home/wm/Short-Circuit/devel/lib 
-Requires: std_msgs geometry_msgs tf costmap_2d

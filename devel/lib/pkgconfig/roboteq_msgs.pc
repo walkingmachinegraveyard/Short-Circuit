@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: roboteq_msgs
-Description: Description of roboteq_msgs
-Version: 0.2.0
-Cflags: -I/home/wm/Short-Circuit/devel/include
-Libs: -L/home/wm/Short-Circuit/devel/lib 
-Requires: 

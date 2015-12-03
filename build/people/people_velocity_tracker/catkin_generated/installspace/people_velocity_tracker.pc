@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: people_velocity_tracker
-Description: Description of people_velocity_tracker
-Version: 1.0.10
-Cflags: 
-Libs: -L/home/wm/Short-Circuit/install/lib 
-Requires: easy_markers geometry_msgs kalman_filter people_msgs roslib rospy

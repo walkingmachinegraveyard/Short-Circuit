@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: openni2_launch
-Description: Description of openni2_launch
-Version: 0.2.2
-Cflags: 
-Libs: -L/home/wm/Short-Circuit/devel/lib 
-Requires: 

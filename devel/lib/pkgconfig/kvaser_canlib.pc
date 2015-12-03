@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: kvaser_canlib
-Description: Description of kvaser_canlib
-Version: 1.0.0
-Cflags: -I/home/wm/Short-Circuit/src/kvaser_canlib/include
-Libs: -L/home/wm/Short-Circuit/devel/lib -lcanlib
-Requires: 

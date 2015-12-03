@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/install
-
-Name: wm_mecanum_cmd
-Description: Description of wm_mecanum_cmd
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/wm/Short-Circuit/install/lib 
-Requires: geometry_msgs roboteq_msgs rospy sensor_msgs

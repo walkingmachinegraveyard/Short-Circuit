@@ -1,8 +1,0 @@
-prefix=/home/wm/Short-Circuit/devel
-
-Name: move_base
-Description: Description of move_base
-Version: 1.13.1
-Cflags: -I/home/wm/Short-Circuit/devel/include
-Libs: -L/home/wm/Short-Circuit/devel/lib 
-Requires: roscpp dynamic_reconfigure
