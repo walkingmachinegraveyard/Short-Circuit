@@ -117,7 +117,7 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/wm/Short-Circuit/build/gtest/cmake_install.cmake")
-  INCLUDE("/home/wm/Short-Circuit/build/urg_node/cmake_install.cmake")
+  INCLUDE("/home/wm/Short-Circuit/build/roboteq/roboteq_driver/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

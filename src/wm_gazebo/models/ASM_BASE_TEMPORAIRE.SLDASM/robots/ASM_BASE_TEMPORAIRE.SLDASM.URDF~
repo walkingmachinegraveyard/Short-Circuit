@@ -19,7 +19,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 0 90" />
       <geometry>
         <mesh
           filename="package://ASM_BASE_TEMPORAIRE.SLDASM/meshes/base_link.STL" />

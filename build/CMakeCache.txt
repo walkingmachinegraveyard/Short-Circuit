@@ -84,7 +84,7 @@ CATKIN_ENABLE_TESTING:BOOL=ON
 CATKIN_SKIP_TESTING:BOOL=OFF
 
 //List of ';' separated packages to build
-CATKIN_WHITELIST_PACKAGES:STRING=urg_node
+CATKIN_WHITELIST_PACKAGES:STRING=roboteq_driver
 
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
@@ -1732,7 +1732,7 @@ leg_detector_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/people/leg_detector
 leg_detector_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/people/leg_detector
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/indigo/lib/libLaserProcNodelet.so
+lib:FILEPATH=/opt/ros/indigo/lib/libserial.so
 
 //Value Computed by CMake
 libnite2_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/cob_people_perception/libnite2
@@ -1947,6 +1947,75 @@ roslz4_DIR:PATH=/opt/ros/indigo/share/roslz4/cmake
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/indigo/share/rospy/cmake
 
+//Value Computed by CMake
+rosserial_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial
+
+//Value Computed by CMake
+rosserial_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial
+
+//Value Computed by CMake
+rosserial_arduino_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_arduino
+
+//Value Computed by CMake
+rosserial_arduino_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_arduino
+
+//Value Computed by CMake
+rosserial_client_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_client
+
+//Value Computed by CMake
+rosserial_client_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_client
+
+//Value Computed by CMake
+rosserial_embeddedlinux_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_embeddedlinux
+
+//Value Computed by CMake
+rosserial_embeddedlinux_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_embeddedlinux
+
+//Value Computed by CMake
+rosserial_mbed_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_mbed
+
+//Value Computed by CMake
+rosserial_mbed_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_mbed
+
+//Value Computed by CMake
+rosserial_msgs_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_msgs
+
+//The directory containing a CMake configuration file for rosserial_msgs.
+rosserial_msgs_DIR:PATH=/home/wm/Short-Circuit/devel/share/rosserial_msgs/cmake
+
+//Value Computed by CMake
+rosserial_msgs_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_msgs
+
+//Value Computed by CMake
+rosserial_python_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_python
+
+//Value Computed by CMake
+rosserial_python_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_python
+
+//Value Computed by CMake
+rosserial_server_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_server
+
+//Value Computed by CMake
+rosserial_server_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_server
+
+//Value Computed by CMake
+rosserial_tivac_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_tivac
+
+//Value Computed by CMake
+rosserial_tivac_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_tivac
+
+//Value Computed by CMake
+rosserial_windows_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_windows
+
+//Value Computed by CMake
+rosserial_windows_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_windows
+
+//Value Computed by CMake
+rosserial_xbee_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/rosserial/rosserial_xbee
+
+//Value Computed by CMake
+rosserial_xbee_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/rosserial/rosserial_xbee
+
 //The directory containing a CMake configuration file for rostest.
 rostest_DIR:PATH=/opt/ros/indigo/share/rostest/cmake
 
@@ -2066,6 +2135,12 @@ wm_mecanum_cmd_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/wm_mecanum_cmd
 
 //Value Computed by CMake
 wm_mecanum_cmd_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/wm_mecanum_cmd
+
+//Value Computed by CMake
+wm_odometry_feedback_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/wm_odometry_feedback
+
+//Value Computed by CMake
+wm_odometry_feedback_SOURCE_DIR:STATIC=/home/wm/Short-Circuit/src/wm_odometry_feedback
 
 //Value Computed by CMake
 wm_static_tf_BINARY_DIR:STATIC=/home/wm/Short-Circuit/build/wm_static_tf
@@ -2280,7 +2355,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=3
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -3178,10 +3253,6 @@ X11_dpms_INCLUDE_PATH-ADVANCED:INTERNAL=1
 X11_xf86misc_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_xf86vmode_INCLUDE_PATH
 X11_xf86vmode_INCLUDE_PATH-ADVANCED:INTERNAL=1
-//Last used BOOST_INCLUDEDIR value.
-_BOOST_INCLUDEDIR_LAST:INTERNAL=/usr/include
-//Last used Boost_ADDITIONAL_VERSIONS value.
-_Boost_ADDITIONAL_VERSIONS_LAST:INTERNAL=1.47;1.47.0
 //Components requested for this build tree.
 _Boost_COMPONENTS_SEARCHED:INTERNAL=date_time;filesystem;iostreams;serialization;signals;system;thread
 //Last used Boost_INCLUDE_DIR value.

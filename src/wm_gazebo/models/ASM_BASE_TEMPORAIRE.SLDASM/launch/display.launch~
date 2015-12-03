@@ -14,12 +14,12 @@
     pkg="tf" 
     type="static_transform_publisher" 
     name="base_broadcaster" 
-    args="0 0 0 0 0 0 base_footprint base_link 50" />
+    args="0 0 0 0 0 0 base_link 50" />
   <node 
     pkg="tf" 
     type="static_transform_publisher" 
     name="laser_broadcaster" 
-    args="0 0 0 0.6 0 0.2 base_link laser_link 50" />
+    args="0 0 0 0.6 0 0.2 laser_link 50" />
   <node
     name="joint_state_publisher"
     pkg="joint_state_publisher"
