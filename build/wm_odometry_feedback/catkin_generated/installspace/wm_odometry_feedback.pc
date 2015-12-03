@@ -1,0 +1,8 @@
+prefix=/home/wm/Short-Circuit/install
+
+Name: wm_odometry_feedback
+Description: Description of wm_odometry_feedback
+Version: 0.0.0
+Cflags: -I/home/wm/Short-Circuit/install/include
+Libs: -L/home/wm/Short-Circuit/install/lib 
+Requires: geometry_msgs message_filters nav_msgs roboteq_msgs roscpp tf2 tf2_ros

@@ -6,6 +6,40 @@
 
 #IncludeRegexTransform: 
 
+/home/wm/Short-Circuit/devel/include/roboteq_msgs/Command.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/home/wm/Short-Circuit/devel/include/roboteq_msgs/Feedback.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
 /home/wm/Short-Circuit/devel/include/roboteq_msgs/Status.h
 string
 -
@@ -40,6 +74,18 @@ stdint.h
 string
 -
 
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/channel.cpp
+roboteq_driver/channel.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_driver/channel.h
+roboteq_driver/controller.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_driver/controller.h
+ros/ros.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/ros/ros.h
+roboteq_msgs/Feedback.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_msgs/Feedback.h
+roboteq_msgs/Command.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_msgs/Command.h
+
 /home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/controller.cpp
 roboteq_driver/controller.h
 /home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_driver/controller.h
@@ -65,6 +111,14 @@ iostream
 -
 sstream
 -
+
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/driver.cpp
+roboteq_driver/controller.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_driver/controller.h
+roboteq_driver/channel.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/roboteq_driver/channel.h
+ros/ros.h
+/home/wm/Short-Circuit/src/roboteq/roboteq_driver/src/ros/ros.h
 
 /opt/ros/indigo/include/XmlRpcDecl.h
 ros/macros.h

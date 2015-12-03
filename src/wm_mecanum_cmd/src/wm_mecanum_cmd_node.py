@@ -21,10 +21,10 @@ class MecanumCmd:
 
         self.sub = rospy.Subscriber('cmd_vel', Twist, self.callback)
 
-        self.pubFLW = rospy.Publisher('roboteq_driver_FLW/cmd', Command, queue_size=1)
-        self.pubFRW = rospy.Publisher('roboteq_driver_FRW/cmd', Command, queue_size=1)
-        self.pubRLW = rospy.Publisher('roboteq_driver_RLW/cmd', Command, queue_size=1)
-        self.pubRRW = rospy.Publisher('roboteq_driver_RRW/cmd', Command, queue_size=1)
+        self.pubFLW = rospy.Publisher('roboteq_driver/FLW', Command, queue_size=1)
+        self.pubFRW = rospy.Publisher('roboteq_driver/FRW', Command, queue_size=1)
+        self.pubRLW = rospy.Publisher('roboteq_driver/RLW', Command, queue_size=1)
+        self.pubRRW = rospy.Publisher('roboteq_driver/RRW', Command, queue_size=1)
 
         self.radius = 0.15 / 2      # wheel radius, in meter
 
