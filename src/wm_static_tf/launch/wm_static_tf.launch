@@ -1,4 +1,0 @@
-<launch>
-	<node pkg="tf" type="static_transform_publisher" name="lidar_base_broadcaster" args="0.308 0.0 0.0 0.0 0.0 0.0 sara_base sara_lidar 100" />
-	<node pkg="tf" type="static_transform_publisher" name="imu_base_broadcaster" args="0.225 0.102 0.0 0.0 0.0 0.0 sara_base sara_imu 100" />
-</launch>
