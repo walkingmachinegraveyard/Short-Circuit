@@ -4,21 +4,23 @@
     <param name="port" value="$(arg port_FLW)" />
     <param name="value" value="115200" />
   </node>
+
   <arg name="port_FRW" default="/dev/ttyUSB1" />
   <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_FRW" output="screen">
     <param name="port" value="$(arg port_FRW)" />
     <param name="value" value="115200" />
   </node>
-<!--
-  <arg name="port_RLW" default="/dev/ttyUSB2" />
+
+  <arg name="port_RLW" default="/dev/ttyACM0" />
   <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_RLW" output="screen">
     <param name="port" value="$(arg port_RLW)" />
     <param name="value" value="115200" />
   </node>
-  <arg name="port_RRW" default="/dev/ttyUSB3" />
+
+  <arg name="port_RRW" default="/dev/ttyACM1" />
   <node pkg="roboteq_driver" type="driver_node" name="roboteq_driver_RRW" output="screen">
     <param name="port" value="$(arg port_RRW)" />
     <param name="value" value="115200" />
   </node>
--->
+
 </launch>

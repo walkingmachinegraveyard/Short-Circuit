@@ -19,23 +19,24 @@ class MecanumCmd:
 
     def __init__(self):
 
+        # get parameters
+        # x axis distance between wheel axis and the robot's centroid
+        self.alpha = rospy.get_param('alpha', 0.31)    # in meter
+        # y axis distance between wheel radial median and the robot'S centroid
+        self.beta = rospy.get_param('beta', 0.30)    # in meter
+        self.radius = rospy.get_param('wheel_radius', 0.075)    # wheel radius, in meter
+        # max linear velocity, in m/s
+        self.maxLinearVelocity = rospy.get_param('max_linear_vel', 1)
+        # max angular velocity, in rad/s
+        divisor = rospy.get_param('angular_vel_div', 6)
+        self.maxAngularVelocity = pi/divisor
+
         self.sub = rospy.Subscriber('cmd_vel', Twist, self.callback)
 
         self.pubFLW = rospy.Publisher('roboteq_driver_FLW/cmd', Command, queue_size=1)
         self.pubFRW = rospy.Publisher('roboteq_driver_FRW/cmd', Command, queue_size=1)
         self.pubRLW = rospy.Publisher('roboteq_driver_RLW/cmd', Command, queue_size=1)
         self.pubRRW = rospy.Publisher('roboteq_driver_RRW/cmd', Command, queue_size=1)
-
-        self.radius = 0.15 / 2      # wheel radius, in meter
-
-        # x axis distance between wheel axis and the robot's centroid
-        self.alpha = 0.31      # in meter
-
-        # y axis distance between wheel radial median and the robot'S centroid
-        self.beta = 0.3       # in meter
-
-        self.maxLinearVelocity = 1   # m/s
-        self.maxAngularVelocity = pi/6  # rad/s
 
     def callback(self, twist):
 
@@ -98,7 +99,7 @@ class MecanumCmd:
         w = [0., 0., 0., 0.]
 
         for k in range(len(w)):
-            w[k] = ((-1)**k) * (1/self.radius) * (J[k][0]*xVel + J[k][1]*yVel + J[k][2]*yawVel)
+            w[k] = -4.0*((-1)**k) * (1/self.radius) * (J[k][0]*xVel + J[k][1]*yVel + J[k][2]*yawVel)
 
         return w
 

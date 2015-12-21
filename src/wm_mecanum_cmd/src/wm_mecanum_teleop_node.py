@@ -29,8 +29,10 @@ class MecanumTeleop:
 
         self.pubFLW = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
-        self.maxLinearVelocity = 1   # m/s
-        self.maxAngularVelocity = pi/6  # rad/s
+        self.maxLinearVelocity = rospy.get_param('max_linear_vel', 1)
+        # max angular velocity, in rad/s
+        divisor = rospy.get_param('angular_vel_div', 6)
+        self.maxAngularVelocity = pi/divisor
 
     def callback(self, joy):
 

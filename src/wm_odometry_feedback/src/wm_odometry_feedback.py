@@ -44,11 +44,13 @@ class OdometryFeedback:
         self.pose = Pose()
 
         # delta time between callbacks
-        self.dt = 1/50.0      # 50Hz, default publish rate of Feedback messages
+        self.dt = 1.0/50      # 50Hz, default publish rate of Feedback messages
 
         self.pub = rospy.Publisher('odom', Odometry, queue_size=1)
 
         self.tf_br = tf2_ros.TransformBroadcaster()
+
+        # self.cb_rate = rospy.Time.now()
 
     def callback(self, flw, frw, rlw, rrw):
 
@@ -57,6 +59,10 @@ class OdometryFeedback:
         tf = TransformStamped()
 
         current_time = rospy.Time.now()
+
+        # dt = current_time.to_sec() - self.cb_rate.to_sec()
+
+        # rospy.loginfo("Time between callbacks = %f", dt)
 
         odom.header.stamp = current_time
         odom.header.frame_id = self.frame_id
@@ -127,6 +133,8 @@ class OdometryFeedback:
         self.pub.publish(odom)
 
         self.tf_br.sendTransform(tf)
+
+        # self.cb_rate = rospy.Time.now()
 
 
 if __name__ == '__main__':
