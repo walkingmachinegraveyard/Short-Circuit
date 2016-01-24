@@ -29,7 +29,7 @@ class MecanumTeleop:
 
         self.pubFLW = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
-        self.maxLinearVelocity = rospy.get_param('max_linear_vel', 1)
+        self.maxLinearVelocity = float(rospy.get_param('max_linear_vel', 1))
         # max angular velocity, in rad/s
         divisor = rospy.get_param('angular_vel_div', 6)
         self.maxAngularVelocity = pi/divisor
@@ -40,7 +40,7 @@ class MecanumTeleop:
 
         # linear velocity
         # button A must be pressed to allow movement
-        vLinear = joy.buttons[0] * sqrt(joy.axes[0]**2 + joy.axes[1]**2)
+        vLinear = float(joy.buttons[0]) * sqrt(joy.axes[0]**2 + joy.axes[1]**2)
 
         # movement orientation
         Heading = atan2(joy.axes[0], joy.axes[1])
@@ -51,7 +51,7 @@ class MecanumTeleop:
         twist.linear.y = self.maxLinearVelocity * vLinear * sin(Heading)
 
         # YAW axis rotational velocity
-        twist.angular.z = self.maxAngularVelocity * joy.buttons[0] * (joy.axes[5] - joy.axes[2]) / 2
+        twist.angular.z = self.maxAngularVelocity * joy.buttons[0] * (joy.axes[5] - joy.axes[2]) / 2.0
 
         self.pubFLW.publish(twist)
 
@@ -62,10 +62,6 @@ if __name__ == '__main__':
         rospy.init_node('wm_mecanum_teleop_node')
 
         MecanumTeleop()
-
-        ####
-        #rate = rospy.Rate(1)   # Hertz
-        #rate.sleep()            # sleep
 
         rospy.spin()
 
