@@ -21,13 +21,13 @@ setconfig(_RWD, 110) ' Watchdog timeout, milliseconds (p195)
 
 ' Undervoltage/overvoltage limits (p214)
 setconfig(_OVL, 300)
-setconfig(_UVL, 220)
+setconfig(_UVL, 210)
 
 for ch = 1 andwhile ch <= MAX_CHANNELS evaluate ch++
 	' Encoder, speed config (p208, p221)
 	setconfig(_EMOD, ch, 18)
-	setconfig(_EPPR, ch, 4096)
-	setconfig(_MXRPM, ch, 3500)
+	setconfig(_EPPR, ch, 500)
+	setconfig(_MXRPM, ch, 1000)
 	setconfig(_CLERD, ch, 0)
 
 	' Current limit (p216)
@@ -49,7 +49,7 @@ top:
 
 			' Motor to be stopped (high-Z).
 			if getvalue(_VAR, ch) = -1 then
-				setconfig(_MMOD, ch, 0)
+				setconfig(_MMOD, ch, 1)
 				setconfig(_KP, ch, 0)
 				setconfig(_KI, ch, 0)
 				setconfig(_KD, ch, 0)
@@ -59,16 +59,16 @@ top:
 
 			' Motor in velocity-control mode.
 			if getvalue(_VAR, ch) = 0 then
-				setconfig(_MMOD, ch, 0)
+				setconfig(_MMOD, ch, 1)
 				setconfig(_KP, ch, 0)
-				setconfig(_KI, ch, 1)
-				setconfig(_KD, ch, 0)
+				setconfig(_KI, ch, 2)
+				setconfig(_KD, ch, 1)
 				setconfig(_ICAP, ch, 80)
 			end if
 
 			' Motor in position-control mode.
 			if getvalue(_VAR, ch) = 1 then
-				setconfig(_MMOD, ch, 0)
+				setconfig(_MMOD, ch, 3)
 				setconfig(_KP, ch, 2)
 				setconfig(_KI, ch, 0)
 				setconfig(_KD, ch, 0)
