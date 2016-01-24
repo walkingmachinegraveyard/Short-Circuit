@@ -22,6 +22,10 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSE
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+#define ENCODER_TICKS 500
+#define MAX_RPM 1000
+
 #ifndef ROBOTEQ_CHANNEL
 #define ROBOTEQ_CHANNEL
 
@@ -69,7 +73,7 @@ protected:
    */
   static double to_encoder_ticks(double x)
   {
-    return x * 4096 / (2 * M_PI);
+    return x * ENCODER_TICKS / (2 * M_PI);
   }
 
   /**
@@ -81,7 +85,7 @@ protected:
    */
   static double from_encoder_ticks(double x)
   {
-    return x * (2 * M_PI) / 4096;
+    return x * (2 * M_PI) / ENCODER_TICKS;
   }
 
   void cmdCallback(const roboteq_msgs::Command&);

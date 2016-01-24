@@ -123,9 +123,9 @@ void Controller::read() {
         flush();
       } else {
         ROS_DEBUG("Attempting to download MBS program.");
-      /*  if (downloadScript()) {
+        if (downloadScript()) {
           start_script_attempts_ = 0;
-        }	*/
+        }	
         ros::Duration(1.0).sleep();
       }
     } else {
@@ -152,7 +152,7 @@ void Controller::processStatus(std::string str) {
   msg.header.stamp = ros::Time::now();
 
   std::vector<std::string> fields;
-  boost::split(fields, str, boost::algorithm::is_any_of(":"));	/*
+  boost::split(fields, str, boost::algorithm::is_any_of(":"));	
   try {
     int reported_script_ver = boost::lexical_cast<int>(fields[1]);
     static int wrong_script_version_count = 0;
@@ -163,7 +163,7 @@ void Controller::processStatus(std::string str) {
         ROS_WARN_STREAM("Script version mismatch. Expecting " << script_ver <<
             " but controller consistently reports " << reported_script_ver << ". " <<
             ". Now attempting download.");
-       // downloadScript();
+        downloadScript();
       }
       return;
     }
@@ -179,7 +179,7 @@ void Controller::processStatus(std::string str) {
   } catch (std::bad_cast& e) {
     ROS_WARN("Failure parsing status data. Dropping message.");
     return;
-  }		*/
+  }		
 
   pub_status_.publish(msg);
 }
