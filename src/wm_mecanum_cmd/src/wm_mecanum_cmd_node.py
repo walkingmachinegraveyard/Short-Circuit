@@ -26,10 +26,12 @@ class MecanumCmd:
         self.beta = rospy.get_param('beta', 0.30)    # in meter
         self.radius = rospy.get_param('wheel_radius', 0.075)    # wheel radius, in meter
         # max linear velocity, in m/s
-        self.maxLinearVelocity = rospy.get_param('max_linear_vel', 1)
+        self.maxLinearVelocity = float(rospy.get_param('max_linear_vel', 1))
         # max angular velocity, in rad/s
         divisor = rospy.get_param('angular_vel_div', 6)
         self.maxAngularVelocity = pi/divisor
+        # gearbox ratio
+        self.gb_ratio = rospy.get_param('gearbox_ratio', 15.0)
 
         self.sub = rospy.Subscriber('cmd_vel', Twist, self.callback)
 
@@ -99,7 +101,7 @@ class MecanumCmd:
         w = [0., 0., 0., 0.]
 
         for k in range(len(w)):
-            w[k] = -4.0*((-1)**k) * (1/self.radius) * (J[k][0]*xVel + J[k][1]*yVel + J[k][2]*yawVel)
+            w[k] = -self.gb_ratio / 5.0 * ((-1)**k) * (1/self.radius) * (J[k][0]*xVel + J[k][1]*yVel + J[k][2]*yawVel)
 
         return w
 

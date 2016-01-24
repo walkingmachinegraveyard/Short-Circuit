@@ -15,11 +15,15 @@ class OdometryFeedback:
     def __init__(self):
 
         # get parameters
-        self.alpha = rospy.get_param('alpha', 0.31)
-        self.beta = rospy.get_param('beta', 0.30)
-        self.wheel_radius = rospy.get_param('wheel_radius', 0.075)
+        # x axis distance between wheel axis and the robot's centroid
+        self.alpha = rospy.get_param('alpha', 0.31)    # in meter
+        # y axis distance between wheel radial median and the robot'S centroid
+        self.beta = rospy.get_param('beta', 0.30)    # in meter
+        self.wheel_radius = rospy.get_param('wheel_radius', 0.075)    # wheel radius, in meter
         self.child_id = rospy.get_param('child_frame_id', "base_link")
         self.frame_id = rospy.get_param('frame_id', "odom")
+        # gearbox ratio
+        self.gb_ratio = rospy.get_param('gearbox_ratio', 15.0)
 
         self.prev_time = rospy.Time()
 
@@ -50,7 +54,7 @@ class OdometryFeedback:
 
         self.tf_br = tf2_ros.TransformBroadcaster()
 
-        # self.cb_rate = rospy.Time.now()
+        self.last_cb = rospy.Time.now()
 
     def callback(self, flw, frw, rlw, rrw):
 
@@ -60,9 +64,10 @@ class OdometryFeedback:
 
         current_time = rospy.Time.now()
 
-        # dt = current_time.to_sec() - self.cb_rate.to_sec()
+        dt = current_time.to_sec() - self.last_cb.to_sec()
+        self.last_cb = current_time
 
-        # rospy.loginfo("Time between callbacks = %f", dt)
+        rospy.loginfo("Time between callbacks = %f", dt)
 
         odom.header.stamp = current_time
         odom.header.frame_id = self.frame_id
@@ -73,10 +78,11 @@ class OdometryFeedback:
         tf.child_frame_id = self.child_id
 
         # x axis linear velocity
-        dx = self.wheel_radius * (self.dk_x[0]*flw.measured_velocity +
-                                  self.dk_x[1]*frw.measured_velocity +
-                                  self.dk_x[2]*rlw.measured_velocity +
-                                  self.dk_x[3]*rrw.measured_velocity)
+        # multiply by -1.0 because of circuitry
+        dx = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_x[0]*flw.measured_velocity +
+                                                         self.dk_x[1]*frw.measured_velocity +
+                                                         self.dk_x[2]*rlw.measured_velocity +
+                                                         self.dk_x[3]*rrw.measured_velocity)
 
         odom.twist.twist.linear.x = dx
 
@@ -84,20 +90,22 @@ class OdometryFeedback:
         self.pose.position.x += self.dt * dx
 
         # y axis linear velocity
-        dy = self.wheel_radius * (self.dk_y[0]*flw.measured_velocity +
-                                  self.dk_y[1]*frw.measured_velocity +
-                                  self.dk_y[2]*rlw.measured_velocity +
-                                  self.dk_y[3]*rrw.measured_velocity)
+        # multiply by -1.0 because of circuitry
+        dy = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_y[0]*flw.measured_velocity +
+                                                         self.dk_y[1]*frw.measured_velocity +
+                                                         self.dk_y[2]*rlw.measured_velocity +
+                                                         self.dk_y[3]*rrw.measured_velocity)
 
         odom.twist.twist.linear.y = dy
         # update y position
         self.pose.position.y += self.dt * dy
 
         # yaw angular velocity
-        dYaw = self.wheel_radius * (self.dk_yaw[0]*flw.measured_velocity +
-                                    self.dk_yaw[1]*frw.measured_velocity +
-                                    self.dk_yaw[2]*rlw.measured_velocity +
-                                    self.dk_yaw[3]*rrw.measured_velocity)
+        # multiply by -1.0 because of circuitry
+        dYaw = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_yaw[0]*flw.measured_velocity +
+                                                           self.dk_yaw[1]*frw.measured_velocity +
+                                                           self.dk_yaw[2]*rlw.measured_velocity +
+                                                           self.dk_yaw[3]*rrw.measured_velocity)
 
         odom.twist.twist.angular.z = dYaw
 
@@ -133,8 +141,6 @@ class OdometryFeedback:
         self.pub.publish(odom)
 
         self.tf_br.sendTransform(tf)
-
-        # self.cb_rate = rospy.Time.now()
 
 
 if __name__ == '__main__':
