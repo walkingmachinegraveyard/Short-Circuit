@@ -1,0 +1,120 @@
+Language model created by QuickLM on Sun Jan 17 18:56:27 EST 2016
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 20 sentences and 11 words
+
+\data\
+ngram 1=11
+ngram 2=34
+ngram 3=51
+
+\1-grams:
+-1.7160 -0.2218 -0.2382
+-1.2389 -0.3010 -0.1035
+-1.7160 -0.9031 -0.2382
+-1.7160 -1.3802 -0.2571
+-1.7160 0.0000 -0.2382
+-0.8709 </s> -0.2083
+-0.8709 <s> -0.2083
+-1.6191 ANUS -0.2185
+-1.6191 CEDRIKA -0.2185
+-1.6191 GEATAN -0.2185
+-1.6191 VIOLE -0.2185
+
+\2-grams:
+-0.3010 -0.2218 </s> -0.3010
+-0.7782 -0.3010 </s> -0.3010
+-0.7782 -0.3010 <s> -0.1963
+-1.3802 -0.3010 ANUS -0.1461
+-1.3802 -0.3010 CEDRIKA -0.1461
+-1.3802 -0.3010 GEATAN -0.1461
+-1.3802 -0.3010 VIOLE -0.1461
+-0.3010 -0.9031 <s> -0.1963
+-0.9031 -1.3802 ANUS -0.2553
+-0.9031 -1.3802 CEDRIKA -0.2553
+-0.9031 -1.3802 GEATAN -0.2553
+-0.9031 -1.3802 VIOLE -0.2553
+-0.3010 0.0000 </s> -0.3010
+-1.1461 </s> -0.3010 -0.2218
+-1.1461 </s> </s> -0.3010
+-0.8451 <s> -0.3010 -0.1249
+-1.1461 <s> -0.9031 0.0000
+-1.1461 <s> -1.3802 0.0000
+-1.2711 <s> ANUS -0.0792
+-1.2711 <s> CEDRIKA -0.0792
+-1.2711 <s> GEATAN -0.0792
+-1.2711 <s> VIOLE -0.0792
+-1.0000 ANUS -0.2218 0.0000
+-1.0000 ANUS 0.0000 0.0000
+-0.5229 ANUS </s> -0.2341
+-1.0000 CEDRIKA -0.2218 0.0000
+-1.0000 CEDRIKA 0.0000 0.0000
+-0.5229 CEDRIKA </s> -0.2341
+-1.0000 GEATAN -0.2218 0.0000
+-1.0000 GEATAN 0.0000 0.0000
+-0.5229 GEATAN </s> -0.2341
+-1.0000 VIOLE -0.2218 0.0000
+-1.0000 VIOLE 0.0000 0.0000
+-0.5229 VIOLE </s> -0.2341
+
+\3-grams:
+-0.9031 -0.3010 <s> ANUS
+-0.9031 -0.3010 <s> CEDRIKA
+-0.9031 -0.3010 <s> GEATAN
+-0.9031 -0.3010 <s> VIOLE
+-0.3010 -0.3010 ANUS </s>
+-0.3010 -0.3010 CEDRIKA </s>
+-0.3010 -0.3010 GEATAN </s>
+-0.3010 -0.3010 VIOLE </s>
+-0.9031 -0.9031 <s> ANUS
+-0.9031 -0.9031 <s> CEDRIKA
+-0.9031 -0.9031 <s> GEATAN
+-0.9031 -0.9031 <s> VIOLE
+-0.3010 -1.3802 ANUS -0.2218
+-0.3010 -1.3802 CEDRIKA -0.2218
+-0.3010 -1.3802 GEATAN -0.2218
+-0.3010 -1.3802 VIOLE -0.2218
+-0.3010 </s> -0.3010 </s>
+-0.6021 <s> -0.3010 <s>
+-1.2041 <s> -0.3010 ANUS
+-1.2041 <s> -0.3010 CEDRIKA
+-1.2041 <s> -0.3010 GEATAN
+-1.2041 <s> -0.3010 VIOLE
+-0.3010 <s> -0.9031 <s>
+-0.9031 <s> -1.3802 ANUS
+-0.9031 <s> -1.3802 CEDRIKA
+-0.9031 <s> -1.3802 GEATAN
+-0.9031 <s> -1.3802 VIOLE
+-0.7782 <s> ANUS 0.0000
+-0.4771 <s> ANUS </s>
+-0.7782 <s> CEDRIKA 0.0000
+-0.4771 <s> CEDRIKA </s>
+-0.7782 <s> GEATAN 0.0000
+-0.4771 <s> GEATAN </s>
+-0.7782 <s> VIOLE 0.0000
+-0.4771 <s> VIOLE </s>
+-0.3010 ANUS -0.2218 </s>
+-0.3010 ANUS 0.0000 </s>
+-0.7782 ANUS </s> -0.3010
+-0.7782 ANUS </s> </s>
+-0.3010 CEDRIKA -0.2218 </s>
+-0.3010 CEDRIKA 0.0000 </s>
+-0.7782 CEDRIKA </s> -0.3010
+-0.7782 CEDRIKA </s> </s>
+-0.3010 GEATAN -0.2218 </s>
+-0.3010 GEATAN 0.0000 </s>
+-0.7782 GEATAN </s> -0.3010
+-0.7782 GEATAN </s> </s>
+-0.3010 VIOLE -0.2218 </s>
+-0.3010 VIOLE 0.0000 </s>
+-0.7782 VIOLE </s> -0.3010
+-0.7782 VIOLE </s> </s>
+
+\end\
+
