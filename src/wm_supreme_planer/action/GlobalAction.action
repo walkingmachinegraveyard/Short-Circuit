@@ -1,0 +1,8 @@
+#goal definition
+string Action
+---
+#result definition
+string result
+---
+#feedback
+float32 percent_complete
