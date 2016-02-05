@@ -5,7 +5,7 @@ import rospy
 import smach
 import smach_ros
 import actionlib
-import time
+import time97
 from smach_ros import SimpleActionState
 from std_msgs.msg import String
 
@@ -33,7 +33,7 @@ class Idle(smach.State):
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 return 'Stop'
-            if self.word == 'sara' :
+            if self.word == 'sarah' :
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 return 'Sarah'
@@ -43,7 +43,7 @@ class Idle(smach.State):
             rospy.loginfo('Idle - Keyword STOP detected !!')
             self.word = data.data
 
-        if data.data == "sara":
+        if data.data == "sarah":
             rospy.loginfo('Idle - Keyword SARAH detected !!')
             self.word = data.data
 
@@ -80,9 +80,20 @@ class WaitingCommand(smach.State):
                 userdata.WComm_lastCommand_out = self.word
                 return 'Stop'
 
+            if self.word == 'say hello':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word  
+                self.SayX('Hi. I am a assistance robot here to serve you. I am not totally fonctionnal for now, but soon i will be able to do the chores for you.')  
+                return 'Timeout'
+
             if self.word == 'go foward':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word    
+                return 'Command'
+
+            if self.word == 'get me the beer':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
                 return 'Command'
 
             if self.word == 'go backward':
@@ -100,7 +111,7 @@ class WaitingCommand(smach.State):
                 userdata.WComm_lastCommand_out = self.word    
                 return 'Command'
             '''
-            if self.word == 'sara':
+            if self.word == 'sarah':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
                 return 'Sarah'
@@ -112,6 +123,14 @@ class WaitingCommand(smach.State):
     def callback(self,data): 
         if data.data == "stop":
             rospy.loginfo('Wcomm - Keyword STOP detected !!')
+            self.word = data.data
+
+        if data.data == "get me the beer":
+            rospy.loginfo('Wcomm - Phrase SAY HI detected !!')
+            self.word = data.data
+
+        if data.data == "say hello":
+            rospy.loginfo('Wcomm - Phrase SAY HI detected !!')
             self.word = data.data
 
         if data.data == 'go foward':
@@ -130,7 +149,7 @@ class WaitingCommand(smach.State):
             rospy.loginfo('Wcomm - Phrase ROTATE RIGHT detected !!')
             self.word = data.data
         '''
-        if data.data == "sara":
+        if data.data == "sarah":
             rospy.loginfo('Wcomm - Keyword SARAH detected !!')
             self.word = data.data
         '''
@@ -164,15 +183,15 @@ class WaitingConfirmation(smach.State):
         timeout = time.time() + 15  # 15 sec
         while True:
             if self.word == 'stop':
-                userdata.WComm_lastWord_out = self.word
+                userdata.WConf_lastWord_out = self.word
                 return 'Stop'
 
             if self.word == 'No':
-                userdata.WComm_lastWord_out = self.word
+                userdata.WConf_lastWord_out = self.word
                 return 'No'
 
             if self.word == 'yes':
-                userdata.WComm_lastWord_out = self.word
+                userdata.WConf_lastWord_out = self.word
                 return 'Yes'
 
             if time.time() > timeout:
@@ -191,13 +210,61 @@ class WaitingConfirmation(smach.State):
             rospy.loginfo('Keyword NO detected !!')
             self.word = data.data
         '''
-        if data.data == "sara":
+        if data.data == "sarah":
             rospy.loginfo('Keyword SARAH detected !!')
             self.word = data.data
         '''
     def SayX(self, ToSay_str):
         rospy.loginfo(ToSay_str)
         self.pub.publish(ToSay_str)
+
+# define state DoSomething
+class DoSomething(smach.State):
+    def __init__(self):
+        smach.State.__init__(self,
+                             outcomes=['Stop',''],
+                             input_keys=['DSome_lastWord_in',
+                                         'DSome_lastState_in',
+                                         'DSome_lastCommand_in'],
+                             output_keys=['DSome_lastWord_out',
+                                         'DSome_lastState_out'])
+        self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
+        self.lastWord = ""
+        self.lastState = ""
+        self.lastCommand = ""
+        self.state = "DoSomething"
+ 
+    def execute(self, userdata):
+        rospy.loginfo('Executing state DoSomething')
+        self.lastWord = userdata.DSome_lastWord_in
+        self.lastState = userdata.DSome_lastState_in
+        self.lastCommand = userdata.DSome_lastState_in
+        userdata.DSome_lastState_out = self.state
+        
+        if self.lastCommand == "stop":
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastState_out = self.state    
+                return 'Stop'
+
+        if self.lastCommand == "go foward":
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastState_out = self.state    
+                return 'Foward'
+
+        if self.lastCommand == "go backward":
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastState_out = self.state    
+                return 'Backward'
+
+        if self.lastCommand == "Rotate left":
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastState_out = self.state    
+                return 'RotLeft'
+
+        if self.lastCommand == "Rotate right":
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastState_out = self.state    
+                return 'RotRight'
 
 # main
 def main():

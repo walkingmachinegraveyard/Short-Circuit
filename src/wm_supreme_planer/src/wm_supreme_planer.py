@@ -27,7 +27,7 @@ class Idle(smach.State):
             rospy.loginfo(userdata.Goal)
             self.pub.publish(userdata.Goal)
                                                     
-def main():
+def main():2
 
 	sm = smach.StateMachine(outcomes=['success',
                             	'aborted',
@@ -39,7 +39,7 @@ def main():
             smach.StateMachine.add('Idle', Idle(),
                                transitions={'Idle':'Idle'},
                                remapping={'Idle_Goal':'sm_Goal',
-                                          'Idle_Result':'sm_Result'})
+    I                                      'Idle_Result':'sm_Result'})
 
 	# Construct action server wrapper
 	asw = smach_ros.ActionServerWrapper('Supreme_Planer', GlobalAction,
