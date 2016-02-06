@@ -113,7 +113,7 @@ JacoComm::JacoComm(const ros::NodeHandle& node_handle,
             QuickStatus quick_status;
             getQuickStatus(quick_status);
 
-            robot_type_ = quick_status.RobotType;
+            robot_type_ = 0;
             if ((robot_type_ != 0) && (robot_type_ != 1) && (robot_type_ != 3))
             {
                 ROS_ERROR("Could not get the type of the arm from the quick status, expected "

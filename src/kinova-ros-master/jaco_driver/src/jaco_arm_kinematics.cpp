@@ -96,12 +96,12 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
     /* Joint 1 Rotation Matrix */
     /*******                 *******
      * cos(q1)    -sin(q1)      0  *
-     * -sin(q1)   -cos(q1)      0  *
-     * 0            0          -1  *
+     * sin(q1)     cos(q1)      0  *
+     * 0            0           1  *
      *******                *******/
     rot_matrix.setValue(cos(q1), -sin(q1), 0,
-                        -sin(q1), -cos(q1), 0,
-                        0, 0, -1);
+                        sin(q1),  cos(q1), 0,
+                        0, 0, 1);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
@@ -123,13 +123,13 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
     /**********************Joint_2**********************/
     /* Joint 2 Rotation Matrix */
     /*******               *******
-     * sin(q2)    cos(q2)     0  *
-     * 0            0         1  *
-     * cos(q2)   -sin(q2)     0  *
+     * sin(q2)      0     cos(q2)*
+     * -cos(q2)     0     sin(q2)*
+     *   0         -1         0  *
      *******              *******/
-    rot_matrix.setValue(sin(q2), cos(q2), 0,
-                        0, 0, 1,
-                        cos(q2), -sin(q2), 0);
+    rot_matrix.setValue(sin(q2), 0, cos(q2),
+                        -cos(q2), 0, sin(q2),
+                        0, -1, 0);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
@@ -151,18 +151,18 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
     /**********************Joint_3**********************/
     /* Joint 3 Rotation Matrix */
     /*******                   *******
-     * -cos(q3)     sin(q3)        0 *
-     *  sin(q2)     cos(q3)        0 *
-     *    0           0           -1 *
+     *  cos(q3)       0      sin(q3) *
+     *  sin(q3)       0     -cos(q3) *
+     *    0           1           0  *
      *******                  *******/
-    rot_matrix.setValue(-cos(q3), sin(q3), 0,
-                        sin(q3), cos(q3), 0,
-                        0, 0, -1);
+    rot_matrix.setValue(cos(q3), 0, sin(q3),
+                        sin(q3), 0, -cos(q3),
+                        0, -1, 0);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
     /* Joint 3 Translation Vector */
-    translation_v.setValue(j2_to_j3_, 0, 0);
+    translation_v.setValue( 0, 0, j2_to_j3_);
     transform.setOrigin(translation_v);
 
     broadcaster_.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
@@ -200,18 +200,18 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
     /**********************Joint_4**********************/
     /* Joint 4 Rotation Matrix */
     /*******                 *******
-     *    0          0          -1 *
-     * sin(q4)     cos(q4)       0 *
-     * cos(q4)    -sin(q4)       0 *
+     * cos(q4)       0     sin(q4) *
+     * sin(q4)       0    -cos(q4) *
+     *   0           1           0 *
      *******                *******/
-    rot_matrix.setValue(0, 0, -1,
-                        sin(q4), cos(q4), 0,
-                        cos(q4), -sin(q4), 0);
+    rot_matrix.setValue(cos(q4), 0, sin(q4),
+                        sin(q4), 0, -cos(q4),
+                        0, 1, 0);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
     /* Joint 4 Translation Vector */
-    translation_v.setValue(j3_to_j4_, 0, 0);
+    translation_v.setValue(0, 0, 0);
     transform.setOrigin(translation_v);
 
     broadcaster_.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
@@ -227,20 +227,14 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
 
     /**********************Joint_5**********************/
     /* Joint 5 Rotation Matrix */
-    /*******                                         *******
-     * cos(-55))*cos(q5)    cos(-55)*-sin(q5)     sin(-55) *
-     * sin(q5)                   cos(q5)             0     *
-     * -sin(-55)*cos(q5)    sin(-55)*sin(q5)      cos(-55) *
-     *******                                        *******/
-    rot_matrix.setValue(cos((degToRad(j5_bend_degrees_)))*cos(q5),
-                        cos((degToRad(j5_bend_degrees_)))*-sin(q5),
-                        sin((degToRad(j5_bend_degrees_))),
-                        sin(q5),
-                        cos(q5),
-                        0,
-                        -sin((degToRad(j5_bend_degrees_)))*cos(q5),
-                        sin((degToRad(j5_bend_degrees_)))*sin(q5),
-                        cos((degToRad(j5_bend_degrees_))));
+    /*******                 *******
+     * cos(q5)       0    -sin(q5) *
+     * sin(q5)       0     cos(q5) *
+     *   0          -1           0 *
+     *******                *******/
+    rot_matrix.setValue(cos(q5), 0, -sin(q5),
+                        sin(q5), 0,  cos(q5),
+                        0, -1, 0);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
@@ -250,9 +244,7 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
      *       0      *
      * -sin(55)*D4  *
      ****       ****/
-    translation_v.setValue(cos(degToRad(-j5_bend_degrees_)) * j4_to_j5_,
-                           0,
-                           -sin(degToRad(-j5_bend_degrees_)) * j4_to_j5_);
+    translation_v.setValue(0, 0, j4_to_j5_);
     transform.setOrigin(translation_v);
 
     broadcaster_.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
