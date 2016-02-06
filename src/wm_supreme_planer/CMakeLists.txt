@@ -101,12 +101,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-find_package(catkin REQUIRED genmsg actionlib_msgs actionlib)
-add_action_files(DIRECTORY action FILES GlobalAction.action)
-generate_messages(DEPENDENCIES actionlib_msgs)
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES wm_supreme_planer
+#  LIBRARIES wm_interpreter
 #  CATKIN_DEPENDS actionlib roslib rospy smach smach_ros
 #  DEPENDS system_lib
 )

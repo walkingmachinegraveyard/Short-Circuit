@@ -5,56 +5,64 @@ import smach_ros
 import actionlib
 import time
 from smach_ros import SimpleActionState
-from smach_ros import ActionServerWrapper
 from std_msgs.msg import String
-from chores.msg import DoDishesAction, DoDishesServer
+from wm_interpreter.msg import *
 
 
 # define state Idle
-class Idle(smach.State):
+class BuildGoal(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['Idle'])
-
-        self.word = ""
-        self.state = "Idle"
-        self.pub = rospy.Publisher('SaraAction', String, queue_size=10)
+                             outcomes=['done'],
+                             input_keys=['result_in'],
+                             output_keys=['goal_out'])
         
     def execute(self, userdata):
-        rospy.loginfo('Executing state SupremeIdle')
+        rospy.loginfo('Executing state SendGoal')
 
-        while true:
-            rospy.loginfo(userdata.Goal)
-            self.pub.publish(userdata.Goal)
+        userdata.goal_out = 'WaitCommand'
+
+        return 'done'
+        
                                                     
-def main():2
+def main():
 
-	sm = smach.StateMachine(outcomes=['success',
-                            	'aborted',
-                            	'preempted'],
-                      input_keys = ['sm_Goal'],
-                      output_keys = ['sm_Result'])
-	with sm:
-    ### Add states in here...
-            smach.StateMachine.add('Idle', Idle(),
-                               transitions={'Idle':'Idle'},
-                               remapping={'Idle_Goal':'sm_Goal',
-    I                                      'Idle_Result':'sm_Result'})
+    sm = smach.StateMachine(outcomes=[])
+    
+    with sm:
+        ### Add states in here...
+        smach.StateMachine.add('BuildGoal',
+          BuildGoal(), 
+          transitions={'done':'SendGoal'},
+          remapping={'goal_out':'sm_goal', 
+          'result_in':'sm_result'})
 
-	# Construct action server wrapper
-	asw = smach_ros.ActionServerWrapper('Supreme_Planer', GlobalAction,
-    						  wrapped_container = sm,
-                              goal_key = 'Goal',
-                              result_key = 'Result',
-    						  succeeded_outcomes = ['success'],
-    						  aborted_outcomes = ['aborted'],
-    						  preempted_outcomes = ['preempted'])
+        smach.StateMachine.add('SendGoal',
+          SimpleActionState('SaraComm',
+            CommAction,
+            goal_slots=['goal']),
+          transitions={'succeeded':'BuildGoal',
+                       'preempted':'BuildGoal',
+                       'aborted':'BuildGoal'},
+          remapping={'goal':'sm_goal'})
 
-	# Run the server in a background thread
-	asw.run_server()
+        '''smach.StateMachine.add('WaitResult',
+          SimpleActionState('SaraComm', 
+            CommAction, 
+            result_slots=['result']), 
+          transitions={'succeeded':'BuildGoal',
+                       'preempted':'BuildGoal',
+                       'aborted':'BuildGoal'},
+          remapping={'result':'sm_result'})'''
+
+	# Execute SMACH plan
+	sm.execute()
 
 
 if __name__ == '__main__':
     rospy.init_node('Supreme_Planer')
-    main()
-    rospy.spin()
+    try:
+      main()
+      rospy.spin()
+    except:
+        pass
