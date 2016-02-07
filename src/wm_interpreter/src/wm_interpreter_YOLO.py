@@ -93,17 +93,22 @@ class WaitingCommand(smach.State):
                 self.SayX('Hi. I am a assistance robot here to serve you. I am not totally fonctionnal for now, but soon i will be able to do the chores for you.')  
                 return 'Timeout'
 
-            if self.word == 'go foward':
-                userdata.WComm_lastWord_out = self.word
-                userdata.WComm_lastCommand_out = self.word    
-                return 'Command'
-
             if self.word == 'get me the beer':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
                 return 'Command'
 
+            if self.word == 'be happy':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'Command'
+
             if self.word == 'follow me':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'Command'
+
+            if self.word == 'go foward':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
                 return 'Command'
