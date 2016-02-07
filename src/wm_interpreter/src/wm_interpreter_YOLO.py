@@ -204,10 +204,12 @@ class WaitingConfirmation(smach.State):
 
             if self.word == 'No':
                 userdata.WConf_lastWord_out = self.word
+                self.SayX('Sorry, can you repeat your command please')
                 return 'No'
 
             if self.word == 'yes':
                 userdata.WConf_lastWord_out = self.word
+                self.SayX('I will now execute your order')
                 return 'Yes'
 
             if time.time() > timeout:
