@@ -23,7 +23,7 @@ gen.add('max_meas_jump',            double_t,   0, '[m]', 0.75, 0, 2.0)
 gen.add('leg_pair_separation',      double_t,   0, '[m]', 0.2, 0, 0.8)
 gen.add('cov_meas_legs',			double_t,   0, '[m]', 0.0025, 0, 0.0025)
 gen.add('cov_meas_people',			double_t,   0, '[m]', 0.0025, 0, 0.0025)
-gen.add('fixed_frame',              str_t,      0, 'Fixed Frame', 'sara_base')
+gen.add('fixed_frame',              str_t,      0, 'Fixed Frame', 'base_link')
 
 gen.add('kalman_p',                 double_t,   0, '',    4, 0, 10)
 gen.add('kalman_q',                 double_t,   0, '', .002, 0, 10)
