@@ -33,6 +33,10 @@ class Idle(smach.State):
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 return 'Stop'
+            if self.word == 'stop':
+                userdata.Idle_lastWord_out = self.word
+                userdata.Idle_lastState_out = self.state
+                return 'Stop'
             if self.word == 'sarah' :
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
@@ -269,6 +273,8 @@ class DoSomething(smach.State):
 # main
 def main():
 
+    rospy.init_node('interpreter')
+
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=[])
 
@@ -307,11 +313,8 @@ def main():
     # Execute SMACH plan
     sm.execute()
 
+    rospy.spin()
 
-if __name__ == '__main__':
-    rospy.init_node('interpreter')
-    try:
-        main()
-        rospy.spin()
-    except:
-        pass
+
+if __name__ == '__main__': 
+    main()

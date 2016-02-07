@@ -8,9 +8,7 @@ import actionlib
 import time
 import threading
 from smach_ros import SimpleActionState
-from smach_ros import ActionServerWrapper
 from std_msgs.msg import String
-from wm_interpreter.msg import *
 
 RECOGNIZER_CALLBACK = None
 
@@ -22,27 +20,21 @@ def handleRecognizerMessage(msg):
 class Idle(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['Stop','Sarah','NoGoal'],
+                             outcomes=['Stop','Sarah'],
                              input_keys=['Idle_lastWord_in',
-                                         'Idle_lastState_in',
-                                         'Idle_goal_in'],
+                                         'Idle_lastState_in'],
                              output_keys=['Idle_lastWord_out',
                                           'Idle_lastState_out'])
         self.word = ""
         self.state = "Idle"
-
         global RECOGNIZER_CALLBACK
         RECOGNIZER_CALLBACK = self.callback
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
         
     def execute(self, userdata):
-        rospy.loginfo('-- Executing state Idle --')
+        rospy.loginfo('Executing state Idle')
         rospy.loginfo('Idle - Waiting for keyword: SARAH')
-
         self.word = ""
-        '''while userdata.Idle_goal_in != 'WaitCommand':
-            continue'''
-        rospy.loginfo('Idle - Goal recived !!')
         while True:
             if self.word == 'stop':
                 userdata.Idle_lastWord_out = self.word
@@ -79,14 +71,11 @@ class WaitingCommand(smach.State):
                                           'WComm_lastCommand_out'])
         self.word = ""
         self.state = "WaitingCommand"
-
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
+        rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state WaitingCommand')
-
         userdata.WComm_lastState_out = self.state
 
         self.SayX('Yes master')
@@ -110,6 +99,11 @@ class WaitingCommand(smach.State):
                 return 'Command'
 
             if self.word == 'get me the beer':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'Command'
+
+            if self.word == 'follow me':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
                 return 'Command'
@@ -145,6 +139,10 @@ class WaitingCommand(smach.State):
 
         if data.data == "get me the beer":
             rospy.loginfo('Wcomm - Phrase SAY HI detected !!')
+            self.word = data.data
+
+        if data.data == "follow me":
+            rospy.loginfo('Wcomm - Phrase FOLLOW ME detected !!')
             self.word = data.data
 
         if data.data == "say hello":
@@ -188,17 +186,13 @@ class WaitingConfirmation(smach.State):
         self.word = ""
         self.state = "WaitingConfirmation"
         self.lastWord = ''
-
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
+        rospy.Subscriber("/recognizer_1/output", String, self.callback)
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
  
     def execute(self, userdata):
-        rospy.loginfo('-- Executing state WaitingConfirmation --')
-
+        rospy.loginfo('Executing state WaitingConfirmation')
         userdata.WConf_lastState_out = self.state 
         self.lastWord = userdata.WConf_lastWord_in
-
         self.SayX('Did you say')
         self.SayX(self.lastWord)
         self.word = ""
@@ -252,7 +246,7 @@ class DoSomething(smach.State):
                                           'DSome_lastState_out',
                                           'DSome_result_out'])
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
-
+        self.pubFollow = rospy.Publisher('voice_follow_flag', String, queue_size=10)
         self.lastWord = ""
         self.lastState = ""
         self.lastCommand = ""
@@ -266,17 +260,21 @@ class DoSomething(smach.State):
         self.lastCommand = userdata.DSome_lastCommand_in
         userdata.DSome_lastState_out = self.state
         
-        rospy.loginfo('yolo 0')
         if self.lastCommand == "stop":
                 userdata.DSome_lastState_out = self.state  
                 userdata.DSome_result_out = 'stop'
+                self.pubFollow.publish('stop')
+                return 'Done'
+
+        if self.lastCommand == "follow me":
+                userdata.DSome_lastState_out = self.state
+                userdata.DSome_result_out = 'follow'
+                self.pubFollow.publish('follow')
                 return 'Done'
 
         if self.lastCommand == "go foward":
-                rospy.loginfo('yolo 1')
                 userdata.DSome_lastState_out = self.state
                 userdata.DSome_result_out = 'foward'
-                rospy.loginfo('yolo 2')   
                 return 'Done'
 
         if self.lastCommand == "go backward":
@@ -295,7 +293,7 @@ class DoSomething(smach.State):
                 return 'Done'
         else:
             return 'Idle'
-        rospy.loginfo('yolo 3')
+
 # main
 def main():
 
@@ -303,24 +301,20 @@ def main():
     rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
 
     # Create a SMACH state machine
-    sm = smach.StateMachine(outcomes=['success','aborted','preempted'],
-                            input_keys = ['goal'],
-                            output_keys = ['result'])
+    sm = smach.StateMachine(outcomes=[])
 
     with sm:
         # Add states to the container
         smach.StateMachine.add('Idle', Idle(),
                                transitions={'Sarah':'WaitingCommand',
-                                            'Stop':'DoSomething',
-                                            'NoGoal':'aborted'},
+                                            'Stop':'Idle'},
                                remapping={'Idle_lastWord_in':'lastWord',
                                           'Idle_lastState_in':'lastState',
                                           'Idle_lastWord_out':'lastWord',
-                                          'Idle_lastState_out':'lastState',
-                                          'Idle_goal_in':'goal'})
+                                          'Idle_lastState_out':'lastState'})
 
         smach.StateMachine.add('WaitingCommand', WaitingCommand(),
-                               transitions={'Stop':'DoSomething',
+                               transitions={'Stop':'Idle',
                                             'Sarah':'WaitingCommand',
                                             'Command':'WaitingConfirmation',
                                             'Timeout':'Idle'},
@@ -332,9 +326,9 @@ def main():
 
         smach.StateMachine.add('WaitingConfirmation', WaitingConfirmation(),
                                transitions={'Timeout':'Idle',
-                                            'Yes':'DoSomething',
-                                            'No':'WaitingCommand',
-                                            'Stop':'DoSomething',
+                                            'Yes':'Idle',
+                                            'No':'Idle',
+                                            'Stop':'Idle',
                                             'Sarah':'WaitingCommand'},
                                remapping={'WConf_lastWord_in':'lastWord',
                                           'WConf_lastState_in':'lastState',
@@ -342,7 +336,7 @@ def main():
                                           'WConf_lastState_out':'lastState'})
 
         smach.StateMachine.add('DoSomething', DoSomething(),
-                               transitions={'Done':'success'},
+                               transitions={'Done':'Idle'},
                                remapping={'DSome_lastWord_in':'lastWord',
                                           'DSome_lastState_in':'lastState',
                                           'DSome_lastCommand_in':'lastCommand',
@@ -350,17 +344,8 @@ def main():
                                           'DSome_lastState_out':'lastState',
                                           'DSome_result_out':'result'})
 
-    # Construct action server wrapper
-    asw = smach_ros.ActionServerWrapper('SaraComm', CommAction,
-                              wrapped_container = sm,
-                              goal_key = 'goal',
-                              result_key = 'result',
-                              succeeded_outcomes = ['success'],
-                              aborted_outcomes = ['aborted'],
-                              preempted_outcomes = ['preempted'])
-
     # Create a thread to execute the smach container
-    smach_thread = threading.Thread(target=asw.run_server())
+    smach_thread = threading.Thread(target=sm.execute)
     smach_thread.start()
 
     rospy.loginfo('main loop')
@@ -369,5 +354,5 @@ def main():
     smach_thread.join()
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': 
     main()
