@@ -63,7 +63,7 @@ class Idle(smach.State):
 class WaitingCommand(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['Command','Sarah','Stop','Timeout'],
+                             outcomes=['Command','DoIt','Sarah','Stop','Timeout'],
                              input_keys=['WComm_lastWord_in',
                                          'WComm_lastState_in'],
                              output_keys=['WComm_lastWord_out',
@@ -101,7 +101,12 @@ class WaitingCommand(smach.State):
             if self.word == 'be happy':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
-                return 'Command'
+                return 'DoIt'
+
+            if self.word == 'be sad':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'DoIt'
 
             if self.word == 'follow me':
                 userdata.WComm_lastWord_out = self.word
@@ -148,6 +153,14 @@ class WaitingCommand(smach.State):
 
         if data.data == "follow me":
             rospy.loginfo('Wcomm - Phrase FOLLOW ME detected !!')
+            self.word = data.data
+
+        if data.data == "be happy":
+            rospy.loginfo('Wcomm - Phrase BE HAPPY detected !!')
+            self.word = data.data
+
+        if data.data == "be sad":
+            rospy.loginfo('Wcomm - Phrase BE SAD detected !!')
             self.word = data.data
 
         if data.data == "say hello":
@@ -250,10 +263,10 @@ class DoSomething(smach.State):
                                          'DSome_lastState_in',
                                          'DSome_lastCommand_in'],
                              output_keys=['DSome_lastWord_out',
-                                          'DSome_lastState_out',
-                                          'DSome_result_out'])
+                                          'DSome_lastState_out'])
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
         self.pubFollow = rospy.Publisher('voice_follow_flag', String, queue_size=10)
+        self.pubEmo = rospy.Publisher('control_emo', int, queue_size=10)
         self.lastWord = ""
         self.lastState = ""
         self.lastCommand = ""
@@ -267,36 +280,40 @@ class DoSomething(smach.State):
         self.lastCommand = userdata.DSome_lastCommand_in
         userdata.DSome_lastState_out = self.state
         
-        if self.lastCommand == "stop":
-                userdata.DSome_lastState_out = self.state  
-                userdata.DSome_result_out = 'stop'
-                self.pubFollow.publish('stop')
+        if self.lastCommand == "be happy":
+                userdata.DSome_lastState_out = self.state
+                self.pubEmo.publish(1)
+                return 'Done'
+
+        if self.lastCommand == "be sad":
+                userdata.DSome_lastState_out = self.state
+                self.pubEmo.publish(2)
                 return 'Done'
 
         if self.lastCommand == "follow me":
                 userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'follow'
                 self.pubFollow.publish('follow')
+                return 'Done'
+
+        if self.lastCommand == "stop":
+                userdata.DSome_lastState_out = self.state
+                self.pubFollow.publish('stop')
                 return 'Done'
 
         if self.lastCommand == "go foward":
                 userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'foward'
                 return 'Done'
 
         if self.lastCommand == "go backward":
-                userdata.DSome_lastState_out = self.state 
-                userdata.DSome_result_out = 'backward'
+                userdata.DSome_lastState_out = self.state
                 return 'Done'
   
-        if self.lastCommand == "Rotate left":
+        if self.lastCommand == "rotate left":
                 userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'rotleft'    
                 return 'Done'
 
-        if self.lastCommand == "Rotate right":
+        if self.lastCommand == "rotate right":
                 userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'rotright'    
                 return 'Done'
         else:
             return 'Idle'
@@ -322,6 +339,7 @@ def main():
 
         smach.StateMachine.add('WaitingCommand', WaitingCommand(),
                                transitions={'Stop':'Idle',
+                                            'DoIt':'DoSomething',
                                             'Sarah':'WaitingCommand',
                                             'Command':'WaitingConfirmation',
                                             'Timeout':'Idle'},

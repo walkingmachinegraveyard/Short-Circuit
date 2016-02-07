@@ -1,0 +1,5 @@
+<launch>
+  <node name="wm_interpreter_YOLO" pkg="wm_interpreter" type="wm_interpreter" output="screen">
+  <node name="sara_vocab.launch" pkg="pocketsphinx" type="pocketsphinx" output="screen">
+  <include file="$(find wm_tts)/launch/wm_tts.launch">
+</launch>
