@@ -8,6 +8,7 @@ import message_filters
 import tf2_ros
 import tf_conversions
 import approxsync
+from math import cos, sin
 
 
 class OdometryFeedback:
@@ -20,8 +21,8 @@ class OdometryFeedback:
         # y axis distance between wheel radial median and the robot'S centroid
         self.beta = rospy.get_param('beta', 0.30)    # in meter
         self.wheel_radius = rospy.get_param('wheel_radius', 0.075)    # wheel radius, in meter
-        self.child_id = rospy.get_param('child_frame_id', "base_link")
-        self.frame_id = rospy.get_param('frame_id', "odom")
+        self.child_id = rospy.get_param('/wm_odometry_feedback_node/child_frame_id', "base_link")
+        self.frame_id = rospy.get_param('/wm_odometry_feedback_node/frame_id', "odom")
         # gearbox ratio
         self.gb_ratio = rospy.get_param('gearbox_ratio', 15.0)
 
@@ -78,47 +79,47 @@ class OdometryFeedback:
         tf.child_frame_id = self.child_id
 
         # x axis linear velocity
-        # multiply by -1.0 because of circuitry
-        dx = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_x[0]*flw.measured_velocity +
+        # multiply by -1.0 because of wiring
+        vX = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_x[0]*flw.measured_velocity +
                                                          self.dk_x[1]*frw.measured_velocity +
                                                          self.dk_x[2]*rlw.measured_velocity +
                                                          self.dk_x[3]*rrw.measured_velocity)
 
-        odom.twist.twist.linear.x = dx
-
-        # update x position
-        self.pose.position.x += self.dt * dx
+        odom.twist.twist.linear.x = vX
 
         # y axis linear velocity
-        # multiply by -1.0 because of circuitry
-        dy = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_y[0]*flw.measured_velocity +
+        # multiply by -1.0 because of wiring
+        vY = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_y[0]*flw.measured_velocity +
                                                          self.dk_y[1]*frw.measured_velocity +
                                                          self.dk_y[2]*rlw.measured_velocity +
                                                          self.dk_y[3]*rrw.measured_velocity)
 
-        odom.twist.twist.linear.y = dy
-        # update y position
-        self.pose.position.y += self.dt * dy
+        odom.twist.twist.linear.y = vY
 
         # yaw angular velocity
-        # multiply by -1.0 because of circuitry
-        dYaw = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_yaw[0]*flw.measured_velocity +
+        # multiply by -1.0 because of wiring
+        vYaw = -1.0 / self.gb_ratio * self.wheel_radius * (self.dk_yaw[0]*flw.measured_velocity +
                                                            self.dk_yaw[1]*frw.measured_velocity +
                                                            self.dk_yaw[2]*rlw.measured_velocity +
                                                            self.dk_yaw[3]*rrw.measured_velocity)
 
-        odom.twist.twist.angular.z = dYaw
+        odom.twist.twist.angular.z = vYaw
 
         # update pose orientation
         # convert orientation to RPY
         # euler = [roll, pitch, yaw]
         euler = tf_conversions.transformations.euler_from_quaternion([self.pose.orientation.x,
-                                                                     self.pose.orientation.y,
-                                                                     self.pose.orientation.z,
-                                                                     self.pose.orientation.w])
+                                                                      self.pose.orientation.y,
+                                                                      self.pose.orientation.z,
+                                                                      self.pose.orientation.w])
+
+        # update x position
+        self.pose.position.x += self.dt * (vX * cos(euler[2]) - vY * sin(euler[2]))
+        # update y position
+        self.pose.position.y += self.dt * (vX * sin(euler[2]) + vY * cos(euler[2]))
 
         # add yaw variation to RPY and convert orientation back to quaternion
-        q = tf_conversions.transformations.quaternion_from_euler(0.0, 0.0, euler[2] + dYaw * self.dt)
+        q = tf_conversions.transformations.quaternion_from_euler(0.0, 0.0, euler[2] + vYaw * self.dt)
         self.pose.orientation.x = q[0]
         self.pose.orientation.y = q[1]
         self.pose.orientation.z = q[2]
@@ -127,15 +128,14 @@ class OdometryFeedback:
         odom.pose.pose = self.pose
 
         # update tf
-        tf.transform.translation.x = dx * self.dt
-        tf.transform.translation.y = dy * self.dt
-        tf.transform.translation.z = dYaw * self.dt
+        tf.transform.translation.x = self.pose.position.x
+        tf.transform.translation.y = self.pose.position.y
+        tf.transform.translation.z = 0.0
 
-        q1 = tf_conversions.transformations.quaternion_from_euler(0.0, 0.0, dYaw * self.dt)
-        tf.transform.rotation.x = q1[0]
-        tf.transform.rotation.y = q1[1]
-        tf.transform.rotation.z = q1[2]
-        tf.transform.rotation.w = q1[3]
+        tf.transform.rotation.x = q[0]
+        tf.transform.rotation.y = q[1]
+        tf.transform.rotation.z = q[2]
+        tf.transform.rotation.w = q[3]
 
         # publish odom and send transform
         self.pub.publish(odom)
