@@ -9,29 +9,35 @@ import time
 import threading
 from smach_ros import SimpleActionState
 from std_msgs.msg import String
+from std_msgs.msg import Float32MultiArray
 
 RECOGNIZER_CALLBACK = None
+RECOGNIZER_CALLBACK2 = None
 
 def handleRecognizerMessage(msg):
     if RECOGNIZER_CALLBACK is not None:
         RECOGNIZER_CALLBACK(msg)
 
+def handleRecognizerMessage2(msg):
+    if RECOGNIZER_CALLBACK2 is not None:
+        RECOGNIZER_CALLBACK2(msg)
+
 # define state Idle
 class Idle(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['Stop','Sarah'],
+                             outcomes=['Stop', 'Sarah'],
                              input_keys=['Idle_lastWord_in',
                                          'Idle_lastState_in'],
                              output_keys=['Idle_lastWord_out',
                                           'Idle_lastState_out'])
         self.word = ""
         self.state = "Idle"
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
         
     def execute(self, userdata):
+        global RECOGNIZER_CALLBACK
+        RECOGNIZER_CALLBACK = self.callback
         rospy.loginfo('Executing state Idle')
         rospy.loginfo('Idle - Waiting for keyword: SARAH')
         self.word = ""
@@ -40,7 +46,7 @@ class Idle(smach.State):
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 return 'Stop'
-            if self.word == 'sarah' :
+            if self.word == 'sarah':
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 return 'Sarah'
@@ -71,10 +77,11 @@ class WaitingCommand(smach.State):
                                           'WComm_lastCommand_out'])
         self.word = ""
         self.state = "WaitingCommand"
-        rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
 
     def execute(self, userdata):
+        global RECOGNIZER_CALLBACK
+        RECOGNIZER_CALLBACK = self.callback
         rospy.loginfo('Executing state WaitingCommand')
         userdata.WComm_lastState_out = self.state
 
@@ -92,6 +99,11 @@ class WaitingCommand(smach.State):
                 userdata.WComm_lastCommand_out = self.word  
                 self.SayX('Hi. I am a assistance robot here to serve you. I am not totally fonctionnal for now, but soon i will be able to do the chores for you.')  
                 return 'Timeout'
+
+            if self.word == 'what do you see':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'DoIt'
 
             if self.word == 'get me the beer':
                 userdata.WComm_lastWord_out = self.word
@@ -151,6 +163,10 @@ class WaitingCommand(smach.State):
             rospy.loginfo('Wcomm - Phrase SAY HI detected !!')
             self.word = data.data
 
+        if data.data == "what do you see":
+            rospy.loginfo('Wcomm - Phrase WHAT DO YOU SEE detected !!')
+            self.word = data.data
+
         if data.data == "follow me":
             rospy.loginfo('Wcomm - Phrase FOLLOW ME detected !!')
             self.word = data.data
@@ -204,10 +220,11 @@ class WaitingConfirmation(smach.State):
         self.word = ""
         self.state = "WaitingConfirmation"
         self.lastWord = ''
-        rospy.Subscriber("/recognizer_1/output", String, self.callback)
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
  
     def execute(self, userdata):
+        global RECOGNIZER_CALLBACK
+        RECOGNIZER_CALLBACK = self.callback
         rospy.loginfo('Executing state WaitingConfirmation')
         userdata.WConf_lastState_out = self.state 
         self.lastWord = userdata.WConf_lastWord_in
@@ -264,23 +281,29 @@ class DoSomething(smach.State):
                                          'DSome_lastCommand_in'],
                              output_keys=['DSome_lastWord_out',
                                           'DSome_lastState_out'])
+
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=10)
         self.pubFollow = rospy.Publisher('voice_follow_flag', String, queue_size=10)
-        self.pubEmo = rospy.Publisher('control_emo', int, queue_size=10)
+        #self.pubEmo = rospy.Publisher('control_emo', int, queue_size=10)
+
+        self.nbObj = ''
         self.lastWord = ""
         self.lastState = ""
         self.lastCommand = ""
         self.state = "DoSomething"
  
     def execute(self, userdata):
+        global RECOGNIZER_CALLBACK2
+        RECOGNIZER_CALLBACK2 = self.callback
         rospy.loginfo('-- Executing state DoSomething --')
 
         self.lastWord = userdata.DSome_lastWord_in
         self.lastState = userdata.DSome_lastState_in
         self.lastCommand = userdata.DSome_lastCommand_in
         userdata.DSome_lastState_out = self.state
+        self.nbObj = ''
         
-        if self.lastCommand == "be happy":
+        '''if self.lastCommand == "be happy":
                 userdata.DSome_lastState_out = self.state
                 self.pubEmo.publish(1)
                 return 'Done'
@@ -288,6 +311,31 @@ class DoSomething(smach.State):
         if self.lastCommand == "be sad":
                 userdata.DSome_lastState_out = self.state
                 self.pubEmo.publish(2)
+                return 'Done' '''
+
+        if self.lastCommand == "what do you see":
+                userdata.DSome_lastState_out = self.state
+                while self.nbObj == '':
+                    continue
+
+                if self.nbObj == 0:
+                    self.SayX('i see nothing')
+
+                else:
+                    phrase = "i see"
+                    for i in range(0, self.nbObj):
+
+                        if self.objectTable[i*12] == 13:
+                            phrase += " a can, "
+
+                        if self.objectTable[i*12] == 14:
+                            phrase += " some mexican food, "
+
+                        if self.objectTable[i*12] == 15:
+                            phrase += " a videogame controller, "
+
+                    self.SayX(phrase)
+
                 return 'Done'
 
         if self.lastCommand == "follow me":
@@ -318,11 +366,22 @@ class DoSomething(smach.State):
         else:
             return 'Idle'
 
+    def SayX(self, ToSay_str):
+        rospy.loginfo(ToSay_str)
+        self.pub.publish(ToSay_str)
+
+    def callback(self,data):
+        self.nbObj = len(data.data)/12
+
+        self.objectTable = data.data
+
+
 # main
 def main():
 
     rospy.init_node('interpreter')
     rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
+    rospy.Subscriber("/Object", Float32MultiArray, handleRecognizerMessage2, queue_size=1)
 
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=[])
@@ -375,6 +434,9 @@ def main():
 
     rospy.loginfo('main loop')
     rospy.spin()
+
+    # Request the container to preempt
+    sm.request_preempt()
 
     smach_thread.join()
 
