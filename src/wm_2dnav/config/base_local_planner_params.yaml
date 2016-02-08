@@ -20,11 +20,11 @@ TrajectoryPlannerROS:
   latch_xy_goal_tolerance: true
 
  # forward simulation parameters
-   sim_time: 1.5
-   sim_granularity: 0.05    # default = 0.025
+  sim_time: 1.5
+  sim_granularity: 0.05    # default = 0.025
 
  # trajectory scoring parameters
-   pdist_scale: 0.4    # default = 0.6
-   gdist_scale: 0.8    # default = 0.8
+  pdist_scale: 0.4    # default = 0.6
+  gdist_scale: 0.8    # default = 0.8
    
   

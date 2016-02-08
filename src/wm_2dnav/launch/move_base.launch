@@ -8,7 +8,6 @@
     <rosparam file="$(find wm_2dnav)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find wm_2dnav)/config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find wm_2dnav)/config/base_local_planner_params.yaml" command="load" />
-    <rosparam file="$(find wm_2dnav)/config/base_global_planner_params.yaml" command="load" />
     <remap from="/odom" to="$(arg odom_topic)" />
   </node>
 
