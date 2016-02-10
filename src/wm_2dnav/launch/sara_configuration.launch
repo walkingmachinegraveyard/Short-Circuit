@@ -1,6 +1,6 @@
 <launch>
    
-     <arg name="auto_mode" default="false" />
+     <arg name="auto_mode" default="true" />
      
 
      <!-- static tf -->
