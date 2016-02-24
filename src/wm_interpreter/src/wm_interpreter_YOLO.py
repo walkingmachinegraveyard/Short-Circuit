@@ -30,7 +30,8 @@ class Idle(smach.State):
                              input_keys=['Idle_lastWord_in',
                                          'Idle_lastState_in'],
                              output_keys=['Idle_lastWord_out',
-                                          'Idle_lastState_out'])
+                                          'Idle_lastState_out',
+                                          'Idle_lastCommand_out'])
         self.word = ""
         self.state = "Idle"
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
@@ -45,6 +46,7 @@ class Idle(smach.State):
             if self.word == 'stop':
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
+                userdata.Idle_lastCommand_out = 'stop'
                 return 'Stop'
             if self.word == 'sarah':
                 userdata.Idle_lastWord_out = self.word
@@ -291,6 +293,7 @@ class DoSomething(smach.State):
         self.lastState = ""
         self.lastCommand = ""
         self.state = "DoSomething"
+        self.str_follow = "stop"
  
     def execute(self, userdata):
         global RECOGNIZER_CALLBACK2
@@ -344,15 +347,19 @@ class DoSomething(smach.State):
                     self.SayX(phrase)
 
                 return 'Done'
-
+        rospy.loginfo(self.lastCommand)
         if self.lastCommand == "follow me":
+                rospy.loginfo('publishing follow')
+                self.str_follow = 'follow'
                 userdata.DSome_lastState_out = self.state
-                self.pubFollow.publish('follow')
+                self.pubFollow.publish(self.str_follow)
                 return 'Done'
 
         if self.lastCommand == "stop":
+                rospy.loginfo('publishing stop')
+                self.str_follow = 'stop'
                 userdata.DSome_lastState_out = self.state
-                self.pubFollow.publish('stop')
+                self.pubFollow.publish(self.str_follow)
                 return 'Done'
 
         if self.lastCommand == "go foward":
@@ -395,35 +402,36 @@ def main():
     with sm:
         # Add states to the container
         smach.StateMachine.add('Idle', Idle(),
-                               transitions={'Sarah': 'WaitingCommand',
-                                            'Stop': 'Idle'},
-                               remapping={'Idle_lastWord_in': 'lastWord',
-                                          'Idle_lastState_in': 'lastState',
-                                          'Idle_lastWord_out': 'lastWord',
-                                          'Idle_lastState_out': 'lastState'})
+                               transitions={'Sarah':'WaitingCommand',
+                                            'Stop':'DoSomething'},
+                               remapping={'Idle_lastWord_in':'lastWord',
+                                          'Idle_lastState_in':'lastState',
+                                          'Idle_lastWord_out':'lastWord',
+                                          'Idle_lastState_out':'lastState',
+                                          'Idle_lastCommand_out':'lastCommand'})
 
         smach.StateMachine.add('WaitingCommand', WaitingCommand(),
-                               transitions={'Stop': 'Idle',
-                                            'DoIt': 'DoSomething',
-                                            'Sarah': 'WaitingCommand',
-                                            'Command': 'WaitingConfirmation',
-                                            'Timeout': 'Idle'},
-                               remapping={'WComm_lastWord_in': 'lastWord',
-                                          'WComm_lastState_in': 'lastState',
-                                          'WComm_lastWord_out': 'lastWord',
-                                          'WComm_lastState_out': 'lastState',
-                                          'WComm_lastCommand_out': 'lastCommand'})
+                               transitions={'Stop':'DoSomething',
+                                            'DoIt':'DoSomething',
+                                            'Sarah':'WaitingCommand',
+                                            'Command':'WaitingConfirmation',
+                                            'Timeout':'Idle'},
+                               remapping={'WComm_lastWord_in':'lastWord',
+                                          'WComm_lastState_in':'lastState',
+                                          'WComm_lastWord_out':'lastWord',
+                                          'WComm_lastState_out':'lastState',
+                                          'WComm_lastCommand_out':'lastCommand'})
 
         smach.StateMachine.add('WaitingConfirmation', WaitingConfirmation(),
-                               transitions={'Timeout': 'Idle',
-                                            'Yes': 'Idle',
-                                            'No': 'Idle',
-                                            'Stop': 'Idle',
-                                            'Sarah': 'WaitingCommand'},
-                               remapping={'WConf_lastWord_in': 'lastWord',
-                                          'WConf_lastState_in': 'lastState',
-                                          'WConf_lastWord_out': 'lastWord',
-                                          'WConf_lastState_out': 'lastState'})
+                               transitions={'Timeout':'Idle',
+                                            'Yes':'DoSomething',
+                                            'No':'Idle',
+                                            'Stop':'DoSomething',
+                                            'Sarah':'WaitingCommand'},
+                               remapping={'WConf_lastWord_in':'lastWord',
+                                          'WConf_lastState_in':'lastState',
+                                          'WConf_lastWord_out':'lastWord',
+                                          'WConf_lastState_out':'lastState'})
 
         smach.StateMachine.add('DoSomething', DoSomething(),
                                transitions={'Done': 'Idle'},

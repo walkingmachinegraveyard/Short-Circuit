@@ -86,7 +86,7 @@ namespace estimation
     // advertise visualization
     people_filter_vis_pub_ = nh_.advertise<sensor_msgs::PointCloud>("people_tracker_filter_visualization",10);
     people_tracker_vis_pub_ = nh_.advertise<sensor_msgs::PointCloud>("people_tracker_measurements_visualization",10);
-
+	ROS_INFO("LOCKED D");
     // register message sequencer
     people_meas_sub_ = nh_.subscribe("people_tracker_measurements", 1, &PeopleTrackingNode::callbackRcv, this);
  
@@ -216,14 +216,12 @@ namespace estimation
       vector<geometry_msgs::Point32> filter_visualize(trackers_.size());
       vector<float> weights(trackers_.size());
       sensor_msgs::ChannelFloat32 channel;
-
       // loop over trackers
       unsigned int i=0;
       list<Tracker*>::iterator it= trackers_.begin();
       while (it!=trackers_.end()){
 	// update prediction up to delayed time
 	(*it)->updatePrediction(ros::Time::now().toSec() - sequencer_delay);
-
 	// publish filter result
 	cob_perception_msgs::PositionMeasurement est_pos;
 	(*it)->getEstimate(est_pos);

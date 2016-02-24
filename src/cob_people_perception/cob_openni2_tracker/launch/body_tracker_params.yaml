@@ -5,15 +5,15 @@
 
 #sets the visibility parameter for skeletons of the tracked users
 #bool 
- drawSkeleton: false
+ drawSkeleton: true
 
 #sets the visibility parameter for a center of tracked users mass
 #bool 
- drawCenterOfMass: false
+ drawCenterOfMass: true
 
 #sets the visibility parameter for names of the tracked users
 #bool 
- drawUserName: false
+ drawUserName: true
 
 #sets the visibility parameter for bounding boxes of the tracked users
 #bool 
@@ -29,4 +29,4 @@
 
 #sets the visibility parameter for skeleton frames of the tracked users
 #bool 
- drawFrames: false
+ drawFrames: true
