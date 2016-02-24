@@ -2,6 +2,8 @@
 
   <arg name="odom_topic" default="/odom" />
 
+  <include file="$(find amcl)/examples/wm_amcl.launch" />
+
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" >
     <rosparam file="$(find wm_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find wm_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
