@@ -26,5 +26,7 @@ TrajectoryPlannerROS:
  # trajectory scoring parameters
   pdist_scale: 0.4    # default = 0.6
   gdist_scale: 0.8    # default = 0.8
+
+  meter_scoring: true
    
   

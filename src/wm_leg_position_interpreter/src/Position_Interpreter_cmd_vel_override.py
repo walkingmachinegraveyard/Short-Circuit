@@ -13,15 +13,15 @@ class Interpreter:
         self.repub = rospy.Publisher("/geometry_msgs/PoseStamped", PoseStamped, queue_size=100)
         self.cmd = rospy.Publisher("/cmd_vel", Twist, queue_size=100)
 
-        self.s = rospy.Subscriber("/people_tracker_measurements", PositionMeasurementArray, self.arraycallback)
+        self.s = rospy.Subscriber("/leg_tracker_measurements", PositionMeasurementArray, self.arraycallback)
         self.flw_cmd = rospy.Subscriber("/voice_follow_flag", String, self.flw_cmd_callback)
 
         self.min_y_ = -1.0
         self.max_y_ = 1.0
-        self.min_x_ = -0.2
-        self.max_x_ = 4.0
+        self.min_x_ = -0.5
+        self.max_x_ = 3.0
         self.max_z_ = 2.0
-        self.stop_flag = False
+        self.stop_flag = True
         
         self.people = None
         self.geo = None
@@ -31,19 +31,21 @@ class Interpreter:
         self.DEBUG = False
 
     def flw_cmd_callback(self, string):
-
-         if string == "stop":
+         rospy.loginfo(string.data)
+         if string.data == "stop":
+             rospy.loginfo(string.data)
              self.stop_flag = True
-         elif string == "follow":
+         elif string.data == "follow":
+             rospy.loginfo(string.data)
              self.stop_flag = False
          elif self.DEBUG:
              self.stop_flag = False
 
     def arraycallback(self, msg):
 
-        #if not self.stop_flag:
-            # STOP MODE ACTIVATED, DO NOT RUN
-            #return
+        if self.stop_flag:
+             #STOP MODE ACTIVATED, DO NOT RUN
+            return
 
         if not msg.people:
             # NO PEOPLE DETECTED
@@ -70,57 +72,7 @@ class Interpreter:
 
             # moves following a vector toward objective
 
-            if 1.5 > self.geo.pose.position.y >= 0.5:
-                # turn left if objective is left
-                self.vel_cmd.linear.x = 0
-                self.vel_cmd.linear.y = 0
-                self.vel_cmd.linear.z = 0
-                self.vel_cmd.angular.x = 0
-                self.vel_cmd.angular.y = 0
-                self.vel_cmd.angular.z = 0.75
-                rospy.loginfo("Left")
-
-            elif 0.5 > self.geo.pose.position.y > 0.2:
-                # turn left if objective is left
-                self.vel_cmd.linear.x = 0
-                self.vel_cmd.linear.y = 0
-                self.vel_cmd.linear.z = 0
-                self.vel_cmd.angular.x = 0
-                self.vel_cmd.angular.y = 0
-                self.vel_cmd.angular.z = 0.5
-                rospy.loginfo("Front and Left")
-
-            elif 0.2 > self.geo.pose.position.y > -0.2:
-                # goes straight if within straight cone
-                self.vel_cmd.linear.x = 1.00
-                self.vel_cmd.linear.y = 0
-                self.vel_cmd.linear.z = 0
-                self.vel_cmd.angular.x = 0
-                self.vel_cmd.angular.y = 0
-                self.vel_cmd.angular.z = 0
-                rospy.loginfo("Straight")
-
-            elif -0.2 > self.geo.pose.position.y > -0.5:
-                # turn right if objective is right
-                self.vel_cmd.linear.x = 0
-                self.vel_cmd.linear.y = 0
-                self.vel_cmd.linear.z = 0
-                self.vel_cmd.angular.x = 0
-                self.vel_cmd.angular.y = 0
-                self.vel_cmd.angular.z = -0.5
-                rospy.loginfo("Front and Right")
-
-            if -0.5 > self.geo.pose.position.y >= -1.5:
-                # turn left if objective is left
-                self.vel_cmd.linear.x = 0
-                self.vel_cmd.linear.y = 0
-                self.vel_cmd.linear.z = 0
-                self.vel_cmd.angular.x = 0
-                self.vel_cmd.angular.y = 0
-                self.vel_cmd.angular.z = -0.75
-                rospy.loginfo("Left")
-
-            elif self.geo.pose.position.x < 0.5:
+            if self.geo.pose.position.x < 0.5:
                 self.vel_cmd.linear.x = -0.5
                 self.vel_cmd.linear.y = 0
                 self.vel_cmd.linear.z = 0
@@ -128,14 +80,76 @@ class Interpreter:
                 self.vel_cmd.angular.y = 0
                 self.vel_cmd.angular.z = 0
 
-            else:
+            elif self.geo.pose.position.x < 1.0 and 0.5 > self.geo.pose.position.y >= -0.5:
                 self.vel_cmd.linear.x = 0
                 self.vel_cmd.linear.y = 0
                 self.vel_cmd.linear.z = 0
                 self.vel_cmd.angular.x = 0
                 self.vel_cmd.angular.y = 0
                 self.vel_cmd.angular.z = 0
-            self.cmd.publish(self.vel_cmd)
+
+            else:
+
+                if 2.0 > self.geo.pose.position.y >= 1.0:
+                    # turn left if objective is left
+                    self.vel_cmd.linear.x = 0
+                    self.vel_cmd.linear.y = 0
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = 0.5
+                    rospy.loginfo("Left")
+
+                elif 1.0 > self.geo.pose.position.y > 0.2:
+                    # turn left if objective is left
+                    self.vel_cmd.linear.x = 0.5
+                    self.vel_cmd.linear.y = 0 
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = 0.5
+                    rospy.loginfo("Front and Left")
+
+                elif 0.2 > self.geo.pose.position.y > -0.2:
+                    # goes straight if within straight cone
+                    self.vel_cmd.linear.x = 0.75
+                    self.vel_cmd.linear.y = 0
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = 0
+                    rospy.loginfo("Straight")
+
+                elif -0.2 > self.geo.pose.position.y > -0.5:
+                    # turn right if objective is right
+                    self.vel_cmd.linear.x = 0.5
+                    self.vel_cmd.linear.y = 0
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = -0.5
+                    rospy.loginfo("Front and Right")
+
+                elif -0.5 > self.geo.pose.position.y >= -1.5:
+                    # turn left if objective is left
+                    self.vel_cmd.linear.x = 0
+                    self.vel_cmd.linear.y = 0
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = -0.5
+                    rospy.loginfo("Left")
+
+
+
+                else:
+                    self.vel_cmd.linear.x = 0
+                    self.vel_cmd.linear.y = 0
+                    self.vel_cmd.linear.z = 0
+                    self.vel_cmd.angular.x = 0
+                    self.vel_cmd.angular.y = 0
+                    self.vel_cmd.angular.z = 0
+                self.cmd.publish(self.vel_cmd)
 
 
 if __name__ == '__main__':

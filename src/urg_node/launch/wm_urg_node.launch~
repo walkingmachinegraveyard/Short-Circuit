@@ -1,5 +1,7 @@
 <launch>
     <node pkg="urg_node" type="urg_node" name="urg_node" output="screen">
-    <param name"frame_id" value"sara_lidar"/>
+    <param name="frame_id" value="sara_lidar"/>
+	<param name="serial_port" value="/dev/ttyACM1"/>
+
     </node>
 </launch>

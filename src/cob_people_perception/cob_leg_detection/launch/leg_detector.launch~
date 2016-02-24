@@ -10,6 +10,7 @@
     <arg name="limit" default="0.2" />
     <param name="/cob_leg_detector/leg_reliability_limit" value="$(arg limit)" type="double"/>
     <param name="frame_id" value="/sara_base"/>
-    
+   <node pkg="wm_leg_position_interpreter" type="Position_Interpreter_cmd_vel_override.py"  name="Position_Interpreter_to_cmd_vel"/>
+
 </launch>
 
