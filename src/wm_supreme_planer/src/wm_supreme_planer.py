@@ -35,20 +35,20 @@ def main():
         ### Add states in here...
         smach.StateMachine.add('BuildGoal',
           BuildGoal(), 
-          transitions={'done':'SendGoal'},
-          remapping={'goal_out':'sm_goal', 
-                     'result_in':'sm_result'})
+          transitions={'done': 'SendGoal'},
+          remapping={'goal_out': 'sm_goal',
+                     'result_in': 'sm_result'})
 
         smach.StateMachine.add('SendGoal',
           SimpleActionState('SaraComm',
             CommAction,
             goal_slots=['goal'],
             result_slots=['result']),
-          transitions={'succeeded':'BuildGoal',
-                       'preempted':'BuildGoal',
-                       'aborted':'BuildGoal'},
-          remapping={'goal':'sm_goal',
-                     'result':'sm_result'})
+          transitions={'succeeded': 'BuildGoal',
+                       'preempted': 'BuildGoal',
+                       'aborted': 'BuildGoal'},
+          remapping={'goal': 'sm_goal',
+                     'result': 'sm_result'})
 
         '''smach.StateMachine.add('WaitResult',
           SimpleActionState('SaraComm', 

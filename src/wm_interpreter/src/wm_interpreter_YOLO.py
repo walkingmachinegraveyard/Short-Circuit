@@ -184,7 +184,7 @@ class WaitingCommand(smach.State):
             self.word = data.data
 
         if data.data == 'go foward':
-            rospy.loginfo('Wcomm - Phrase GO FOWARD detected !!')
+            rospy.loginfo('Wcomm - Phrase GO FORWARD detected !!')
             self.word = data.data
 
         if data.data == 'go backward':
@@ -315,8 +315,12 @@ class DoSomething(smach.State):
 
         if self.lastCommand == "what do you see":
                 userdata.DSome_lastState_out = self.state
+                rospy.loginfo('DSomm - Waiting for object table !!')
+
                 while self.nbObj == '':
                     continue
+
+                rospy.loginfo('DSomm - object table received !!')
 
                 if self.nbObj == 0:
                     self.SayX('i see nothing')
@@ -325,13 +329,16 @@ class DoSomething(smach.State):
                     phrase = "i see"
                     for i in range(0, self.nbObj):
 
-                        if self.objectTable[i*12] == 13:
+                        if i == self.nbObj - 1 and self.nbObj >= 2 :
+                            phrase += " and "
+
+                        if self.objectTable[i*12] == 3:
                             phrase += " a can, "
 
-                        if self.objectTable[i*12] == 14:
+                        if self.objectTable[i*12] == 4:
                             phrase += " some mexican food, "
 
-                        if self.objectTable[i*12] == 15:
+                        if self.objectTable[i*12] == 5:
                             phrase += " a videogame controller, "
 
                     self.SayX(phrase)
@@ -372,16 +379,15 @@ class DoSomething(smach.State):
 
     def callback(self,data):
         self.nbObj = len(data.data)/12
-
         self.objectTable = data.data
 
 
 # main
 def main():
 
-    rospy.init_node('interpreter')
+
     rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
-    rospy.Subscriber("/Object", Float32MultiArray, handleRecognizerMessage2, queue_size=1)
+    rospy.Subscriber("/objects", Float32MultiArray, handleRecognizerMessage2, queue_size=1)
 
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=[])
@@ -389,51 +395,48 @@ def main():
     with sm:
         # Add states to the container
         smach.StateMachine.add('Idle', Idle(),
-                               transitions={'Sarah':'WaitingCommand',
-                                            'Stop':'Idle'},
-                               remapping={'Idle_lastWord_in':'lastWord',
-                                          'Idle_lastState_in':'lastState',
-                                          'Idle_lastWord_out':'lastWord',
-                                          'Idle_lastState_out':'lastState'})
+                               transitions={'Sarah': 'WaitingCommand',
+                                            'Stop': 'Idle'},
+                               remapping={'Idle_lastWord_in': 'lastWord',
+                                          'Idle_lastState_in': 'lastState',
+                                          'Idle_lastWord_out': 'lastWord',
+                                          'Idle_lastState_out': 'lastState'})
 
         smach.StateMachine.add('WaitingCommand', WaitingCommand(),
-                               transitions={'Stop':'Idle',
-                                            'DoIt':'DoSomething',
-                                            'Sarah':'WaitingCommand',
-                                            'Command':'WaitingConfirmation',
-                                            'Timeout':'Idle'},
-                               remapping={'WComm_lastWord_in':'lastWord',
-                                          'WComm_lastState_in':'lastState',
-                                          'WComm_lastWord_out':'lastWord',
-                                          'WComm_lastState_out':'lastState',
-                                          'WComm_lastCommand_out':'lastCommand'})
+                               transitions={'Stop': 'Idle',
+                                            'DoIt': 'DoSomething',
+                                            'Sarah': 'WaitingCommand',
+                                            'Command': 'WaitingConfirmation',
+                                            'Timeout': 'Idle'},
+                               remapping={'WComm_lastWord_in': 'lastWord',
+                                          'WComm_lastState_in': 'lastState',
+                                          'WComm_lastWord_out': 'lastWord',
+                                          'WComm_lastState_out': 'lastState',
+                                          'WComm_lastCommand_out': 'lastCommand'})
 
         smach.StateMachine.add('WaitingConfirmation', WaitingConfirmation(),
-                               transitions={'Timeout':'Idle',
-                                            'Yes':'Idle',
-                                            'No':'Idle',
-                                            'Stop':'Idle',
-                                            'Sarah':'WaitingCommand'},
-                               remapping={'WConf_lastWord_in':'lastWord',
-                                          'WConf_lastState_in':'lastState',
-                                          'WConf_lastWord_out':'lastWord',
-                                          'WConf_lastState_out':'lastState'})
+                               transitions={'Timeout': 'Idle',
+                                            'Yes': 'Idle',
+                                            'No': 'Idle',
+                                            'Stop': 'Idle',
+                                            'Sarah': 'WaitingCommand'},
+                               remapping={'WConf_lastWord_in': 'lastWord',
+                                          'WConf_lastState_in': 'lastState',
+                                          'WConf_lastWord_out': 'lastWord',
+                                          'WConf_lastState_out': 'lastState'})
 
         smach.StateMachine.add('DoSomething', DoSomething(),
-                               transitions={'Done':'Idle'},
-                               remapping={'DSome_lastWord_in':'lastWord',
-                                          'DSome_lastState_in':'lastState',
-                                          'DSome_lastCommand_in':'lastCommand',
-                                          'DSome_lastWord_out':'lastWord',
-                                          'DSome_lastState_out':'lastState',
-                                          'DSome_result_out':'result'})
+                               transitions={'Done': 'Idle'},
+                               remapping={'DSome_lastWord_in': 'lastWord',
+                                          'DSome_lastState_in': 'lastState',
+                                          'DSome_lastCommand_in': 'lastCommand',
+                                          'DSome_lastWord_out': 'lastWord',
+                                          'DSome_lastState_out': 'lastState',
+                                          'DSome_result_out': 'result'})
 
     # Create a thread to execute the smach container
     smach_thread = threading.Thread(target=sm.execute)
     smach_thread.start()
-
-    rospy.loginfo('main loop')
-    rospy.spin()
 
     # Request the container to preempt
     sm.request_preempt()
@@ -441,5 +444,7 @@ def main():
     smach_thread.join()
 
 
-if __name__ == '__main__': 
-    main()
+if __name__ == '__main__':
+    rospy.init_node('interpreter')
+    main = main()
+    rospy.spin()
