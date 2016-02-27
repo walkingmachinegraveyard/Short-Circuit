@@ -21,7 +21,7 @@ class BuildGoal(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state SendGoal')
 
-        userdata.goal_out = 'WaitCommand'
+        userdata.goal_out = 'WaitForCommand'
 
         return 'done'
         

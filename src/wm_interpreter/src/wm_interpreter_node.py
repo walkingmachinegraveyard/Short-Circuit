@@ -27,13 +27,14 @@ class Idle(smach.State):
                              outcomes=['Stop', 'Sarah'],
                              input_keys=['Idle_lastWord_in',
                                          'Idle_lastState_in',
-                                         'Idle_goal_in'],
+                                         'goal'],
                              output_keys=['Idle_lastWord_out',
                                           'Idle_lastState_out'])
         self.word = ""
         self.state = "Idle"
-        self.KEYWORDS = {'stop': 'Stop',
+        self.COMMANDS = {'stop': 'Stop',
                          'sarah': 'Sarah'}
+        self.GOALS = {'WaitForCommand'}
 
         global RECOGNIZER_CALLBACK
         RECOGNIZER_CALLBACK = self.callback
@@ -41,22 +42,25 @@ class Idle(smach.State):
         
     def execute(self, userdata):
         rospy.loginfo('-- Executing state Idle --')
-        rospy.loginfo('Idle - Waiting for keyword: SARAH')
 
-        self.word = ""
-        '''while userdata.Idle_goal_in != 'WaitCommand':
+        '''while userdata.goal != 'WaitCommand':
+            rospy.loginfo(userdata.goal)
             continue'''
         rospy.loginfo('Idle - Goal received !!')
+
+        rospy.loginfo('Idle - Waiting for keyword: SARAH')
+        self.word = ""
         while True:
-            if self.word in self.KEYWORDS:
+            rospy.loginfo('Idle - waiting...')
+            if self.word in self.COMMANDS:
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
-                return self.KEYWORDS[self.word]
+                return self.COMMANDS[self.word]
 
     def callback(self,data):
         toLog = 'Idle - Keyword'
-        if self.word in self.KEYWORDS:
-            toLog += ' ' + self.KEYWORDS
+        if self.word in self.COMMANDS:
+            toLog += ' ' + self.COMMANDS
             self.word = data.data
             rospy.loginfo(toLog)
 
@@ -77,7 +81,7 @@ class WaitingCommand(smach.State):
                                           'WComm_lastCommand_out'])
         self.word = ""
         self.state = "WaitingCommand"
-        self.KEYWORDS = {'stop': 'Stop',
+        self.COMMANDS = {'stop': 'Stop',
                          'sarah': 'Sarah',
                          'say hello': 'Timeout',
                          'go foward': 'Command',
@@ -101,7 +105,7 @@ class WaitingCommand(smach.State):
 
         timeout = time.time() + TIMEOUT_LENGTH  # 15 sec
         while True:
-            if self.word in self.KEYWORDS:
+            if self.word in self.COMMANDS:
 
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word
@@ -110,7 +114,7 @@ class WaitingCommand(smach.State):
                     self.SayX('Hi. I am a assistance robot here to serve you. I am not totally functional for now,'
                               ' but soon i will be able to do the chores for you.')
 
-                return self.KEYWORDS[self.word]
+                return self.COMMANDS[self.word]
 
             if time.time() > timeout:
                 userdata.WComm_lastState_out = self.state  
@@ -118,8 +122,8 @@ class WaitingCommand(smach.State):
 
     def callback(self,data):
         toLog = 'WComm - keyword'
-        if self.word in self.KEYWORDS:
-            toLog += ' ' + self.KEYWORDS
+        if self.word in self.COMMANDS:
+            toLog += ' ' + self.COMMANDS
             self.word = data.data
             rospy.loginfo(toLog)
 
@@ -140,7 +144,7 @@ class WaitingConfirmation(smach.State):
         self.word = ""
         self.state = "WaitingConfirmation"
         self.lastWord = ''
-        self.KEYWORDS = {'stop': 'Stop',
+        self.COMMANDS = {'stop': 'Stop',
                          'sarah': 'Sarah',
                          'say hello': 'Timeout',
                          'yes': 'Command',
@@ -162,18 +166,18 @@ class WaitingConfirmation(smach.State):
         timeout = time.time() + TIMEOUT_LENGTH  # 15 sec
 
         while True:
-            if self.word in self.KEYWORDS:
+            if self.word in self.COMMANDS:
                 userdata.WConf_lastWord_out = self.word
                 userdata.WConf_lastState_out = self.state
-                return self.KEYWORDS[self.word]
+                return self.COMMANDS[self.word]
 
             if time.time() > timeout:
                 return 'Timeout'
 
     def callback(self,data):
         toLog = 'WConf - keyword'
-        if self.word in self.KEYWORDS:
-            toLog += ' ' + self.KEYWORDS
+        if self.word in self.COMMANDS:
+            toLog += ' ' + self.COMMANDS
             self.word = data.data
             rospy.loginfo(toLog)
 
@@ -200,7 +204,7 @@ class DoSomething(smach.State):
         self.lastState = ""
         self.lastCommand = ""
         self.state = "DoSomething"
-        self.KEYWORDS = {'stop': 'Stop',
+        self.COMMANDS = {'stop': 'Stop',
                          'sarah': 'Sarah',
                          'say hello': 'Timeout',
                          'go foward': 'Command',
@@ -305,19 +309,23 @@ def main():
                               aborted_outcomes = ['aborted'],
                               preempted_outcomes = ['preempted'])
 
-    sis = smach_ros.IntrospectionServer('server_name', asw.wrapped_container, '/ASW_ROOT')
+    '''sis = smach_ros.IntrospectionServer('server_name', asw.wrapped_container, '/ASW_ROOT')'''
 
 
     # Create a thread to execute the smach container
-    smach_thread = threading.Thread(target=sis.start)
-    smach_thread.start()
+    '''sis_thread = threading.Thread(target=sis.start)
+    sis_thread.start()'''
+
+    asw_thread = threading.Thread(target=asw.run_server)
+    asw_thread.start()
 
     rospy.spin()
 
    # Request the container to preempt
     sm.request_preempt()
 
-    smach_thread.join()
+    '''sis_thread.join()'''
+    asw_thread.join()
 
 
 if __name__ == '__main__':

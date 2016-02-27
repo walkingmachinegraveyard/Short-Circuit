@@ -96,6 +96,11 @@ class WaitingCommand(smach.State):
                 userdata.WComm_lastCommand_out = self.word
                 return 'Stop'
 
+            if self.word == 'sarah':
+                userdata.WComm_lastWord_out = self.word
+                userdata.WComm_lastCommand_out = self.word
+                return 'Sarah'
+
             if self.word == 'say hello':
                 userdata.WComm_lastWord_out = self.word
                 userdata.WComm_lastCommand_out = self.word  
@@ -200,11 +205,11 @@ class WaitingCommand(smach.State):
         if data.data == 'rotate right':
             rospy.loginfo('Wcomm - Phrase ROTATE RIGHT detected !!')
             self.word = data.data
-        '''
+
         if data.data == "sarah":
             rospy.loginfo('Wcomm - Keyword SARAH detected !!')
             self.word = data.data
-        '''
+
     def SayX(self, ToSay_str):
         rospy.loginfo(ToSay_str)
         self.pub.publish(ToSay_str)
@@ -357,6 +362,7 @@ class DoSomething(smach.State):
 
         if self.lastCommand == "stop":
                 rospy.loginfo('publishing stop')
+                self.SayX('I will now stop')
                 self.str_follow = 'stop'
                 userdata.DSome_lastState_out = self.state
                 self.pubFollow.publish(self.str_follow)
