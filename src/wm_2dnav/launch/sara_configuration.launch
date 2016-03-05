@@ -1,6 +1,7 @@
 <launch>
    
-     <arg name="auto_mode" default="true" />
+     <arg name="auto_mode" default="false" />
+     <arg name="dynamic_mapping" default="true" />
      
 
      <!-- static tf -->
@@ -20,5 +21,12 @@
 
      <!-- odometry -->
      <include file="$(find wm_odometry_feedback)/launch/wm_odometry_feedback.launch" />
+
+     <!-- lidar -->
+     <include file="$(find urg_node)/launch/wm_urg_node.launch" />
+
+     <group if="$(arg dynamic_mapping)">
+         <include file="$(find gmapping)/launch/wm_slam_gmapping.launch" />
+     </group>
 
 </launch>

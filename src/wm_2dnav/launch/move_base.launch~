@@ -8,10 +8,7 @@
     <rosparam file="$(find wm_2dnav)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find wm_2dnav)/config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find wm_2dnav)/config/base_local_planner_params.yaml" command="load" />
-    <rosparam file="$(find wm_2dnav)/config/base_global_planner_params.yaml" command="load" />
-    <param name="planner_frequency" value="2.0" />
-    <param name="controller_frequency" value="15.0" />
-    <param name="base_local_planner" value="$(arg base_local_planner)" />
     <remap from="/odom" to="$(arg odom_topic)" />
   </node>
+
 </launch>
