@@ -157,7 +157,7 @@ void JacoKinematics::updateForward(float q1, float q2, float q3, float q4, float
      *******                  *******/
     rot_matrix.setValue(cos(q3), 0, sin(q3),
                         sin(q3), 0, -cos(q3),
-                        0, -1, 0);
+                        0, 1, 0);
     rot_matrix.getRotation(rotation_q);
     transform.setRotation(rotation_q);
 
