@@ -4,6 +4,7 @@ import roslib
 import rospy
 import smach
 import smach_ros
+from smach import StateMachine
 import actionlib
 import time
 import threading
@@ -36,12 +37,13 @@ class Idle(smach.State):
                          'sarah': 'Sarah'}
         self.GOALS = {'WaitForCommand'}
 
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
         
     def execute(self, userdata):
         rospy.loginfo('-- Executing state Idle --')
+
+        global RECOGNIZER_CALLBACK
+        RECOGNIZER_CALLBACK = self.callback
 
         '''while userdata.goal != 'WaitCommand':
             rospy.loginfo(userdata.goal)
@@ -51,7 +53,7 @@ class Idle(smach.State):
         rospy.loginfo('Idle - Waiting for keyword: SARAH')
         self.word = ""
         while True:
-            rospy.loginfo('Idle - waiting...')
+            '''rospy.loginfo(self.word)'''
             if self.word in self.COMMANDS:
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
@@ -93,6 +95,7 @@ class WaitingCommand(smach.State):
 
         global RECOGNIZER_CALLBACK
         RECOGNIZER_CALLBACK = self.callback
+
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
 
     def execute(self, userdata):
@@ -250,8 +253,9 @@ class DoSomething(smach.State):
 # main
 def main():
 
-    rospy.init_node('interpreter')
     rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
+
+    rospy.init_node('interpreter')
 
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['success', 'aborted', 'preempted'],
@@ -309,24 +313,19 @@ def main():
                               aborted_outcomes = ['aborted'],
                               preempted_outcomes = ['preempted'])
 
+
     '''sis = smach_ros.IntrospectionServer('server_name', asw.wrapped_container, '/ASW_ROOT')'''
 
-
     # Create a thread to execute the smach container
-    '''sis_thread = threading.Thread(target=sis.start)
-    sis_thread.start()'''
+    '''asw_thread = threading.Thread(target=asw.run_server);
+    asw_thread.start()'''
 
-    asw_thread = threading.Thread(target=asw.run_server)
-    asw_thread.start()
+    '''asw_thread.join()'''
+    asw.run_server()
 
-    rospy.spin()
-
-   # Request the container to preempt
+ # Request the container to preempt
     sm.request_preempt()
 
-    '''sis_thread.join()'''
-    asw_thread.join()
-
-
 if __name__ == '__main__':
-    main()
+    main = main()
+    rospy.spin()

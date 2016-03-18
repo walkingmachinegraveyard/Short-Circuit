@@ -398,7 +398,6 @@ class DoSomething(smach.State):
 # main
 def main():
 
-
     rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
     rospy.Subscriber("/objects", Float32MultiArray, handleRecognizerMessage2, queue_size=1)
 
