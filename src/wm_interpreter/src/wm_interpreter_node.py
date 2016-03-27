@@ -11,15 +11,10 @@ import threading
 from smach_ros import SimpleActionState
 from smach_ros import ActionServerWrapper
 from std_msgs.msg import String
+from std_msgs.msg import UInt8
 from wm_interpreter.msg import *
 
-TIMEOUT_LENGTH = 15
-
-RECOGNIZER_CALLBACK = None
-
-def handleRecognizerMessage(msg):
-    if RECOGNIZER_CALLBACK is not None:
-        RECOGNIZER_CALLBACK(msg)
+TIMEOUT_LENGTH = 10
 
 # define state Idle
 class Idle(smach.State):
@@ -32,43 +27,40 @@ class Idle(smach.State):
                              output_keys=['Idle_lastWord_out',
                                           'Idle_lastState_out'])
         self.word = ""
-        self.state = "Idle"
         self.COMMANDS = {'stop': 'Stop',
                          'sarah': 'Sarah'}
-        self.GOALS = {'WaitForCommand'}
+        self.GOALS = {'WaitForCommand', 'SayX'}
 
-        self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
-        
+        self.pubTTS = rospy.Publisher('SaraVoice', String, queue_size=1)
+        self.pubEmo = rospy.Publisher('/control_emo', UInt8, latch=True)
+        self.sub = rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
+
     def execute(self, userdata):
         rospy.loginfo('-- Executing state Idle --')
-
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
-
-        '''while userdata.goal != 'WaitCommand':
-            rospy.loginfo(userdata.goal)
-            continue'''
-        rospy.loginfo('Idle - Goal received !!')
+        userdata.Idle_lastState_out = "Idle"
+        self.pubEmo.publish(8)
 
         rospy.loginfo('Idle - Waiting for keyword: SARAH')
-        self.word = ""
         while True:
-            '''rospy.loginfo(self.word)'''
             if self.word in self.COMMANDS:
                 userdata.Idle_lastWord_out = self.word
-                userdata.Idle_lastState_out = self.state
                 return self.COMMANDS[self.word]
 
     def callback(self,data):
         toLog = 'Idle - Keyword'
-        if self.word in self.COMMANDS:
-            toLog += ' ' + self.COMMANDS
+        if data.data in self.COMMANDS:
+            toLog += ' ' + str(self.COMMANDS)
             self.word = data.data
             rospy.loginfo(toLog)
 
     def SayX(self, ToSay_str):
         rospy.loginfo(ToSay_str)
-        self.pub.publish(ToSay_str)
+        self.pubTTS.publish(ToSay_str)
+
+    def request_preempt(self):
+        """Overload the preempt request method just to spew an error."""
+        smach.State.request_preempt(self)
+        rospy.logwarn("Preempted!")
 
 
 # define state WaitingCommand
@@ -92,21 +84,21 @@ class WaitingCommand(smach.State):
                          'rotate left': 'Command',
                          'rotate right': 'Command'}
 
-
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
-
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
+        self.pubEmo = rospy.Publisher('/control_emo', UInt8, latch=True)
+        self.sub = rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state WaitingCommand')
+
+        self.pubEmo.publish(0)
 
         userdata.WComm_lastState_out = self.state
 
         self.SayX('Yes master')
         self.word = ""
 
-        timeout = time.time() + TIMEOUT_LENGTH  # 15 sec
+        timeout = time.time() + TIMEOUT_LENGTH  # 10 sec
         while True:
             if self.word in self.COMMANDS:
 
@@ -120,19 +112,24 @@ class WaitingCommand(smach.State):
                 return self.COMMANDS[self.word]
 
             if time.time() > timeout:
-                userdata.WComm_lastState_out = self.state  
+                userdata.WComm_lastState_out = self.state
                 return 'Timeout'
 
     def callback(self,data):
         toLog = 'WComm - keyword'
-        if self.word in self.COMMANDS:
-            toLog += ' ' + self.COMMANDS
+        if data.data in self.COMMANDS:
+            toLog += ' ' + str(self.COMMANDS)
             self.word = data.data
             rospy.loginfo(toLog)
 
     def SayX(self, ToSay_str):
         rospy.loginfo(ToSay_str)
         self.pub.publish(ToSay_str)
+
+    def request_preempt(self):
+        """Overload the preempt request method just to spew an error."""
+        smach.State.request_preempt(self)
+        rospy.logwarn("Preempted!")
 
 
 # define state WaitingConfirmation
@@ -153,9 +150,9 @@ class WaitingConfirmation(smach.State):
                          'yes': 'Command',
                          'no': 'Command'}
 
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
+
+        self.sub = rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
  
     def execute(self, userdata):
         rospy.loginfo('-- Executing state WaitingConfirmation --')
@@ -172,15 +169,17 @@ class WaitingConfirmation(smach.State):
             if self.word in self.COMMANDS:
                 userdata.WConf_lastWord_out = self.word
                 userdata.WConf_lastState_out = self.state
+
                 return self.COMMANDS[self.word]
 
             if time.time() > timeout:
+
                 return 'Timeout'
 
     def callback(self,data):
         toLog = 'WConf - keyword'
-        if self.word in self.COMMANDS:
-            toLog += ' ' + self.COMMANDS
+        if data.data in self.COMMANDS:
+            toLog += ' ' + str(self.COMMANDS)
             self.word = data.data
             rospy.loginfo(toLog)
 
@@ -188,11 +187,16 @@ class WaitingConfirmation(smach.State):
         rospy.loginfo(ToSay_str)
         self.pub.publish(ToSay_str)
 
+    def request_preempt(self):
+        """Overload the preempt request method just to spew an error."""
+        smach.State.request_preempt(self)
+        rospy.logwarn("Preempted!")
+
 # define state DoSomething
 class DoSomething(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['Done'],
+                             outcomes=['Done','Fail'],
                              input_keys=['DSome_lastWord_in',
                                          'DSome_lastState_in',
                                          'DSome_lastCommand_in'],
@@ -203,7 +207,6 @@ class DoSomething(smach.State):
         self.pubFollow = rospy.Publisher('voice_follow_flag', String, queue_size=1)
         #self.pubEmo = rospy.Publisher('control_emo', int, queue_size=10)
 
-        self.lastWord = ""
         self.lastState = ""
         self.lastCommand = ""
         self.state = "DoSomething"
@@ -224,36 +227,24 @@ class DoSomething(smach.State):
         self.lastCommand = userdata.DSome_lastCommand_in
         userdata.DSome_lastState_out = self.state
 
-        if self.lastCommand == "stop":
-                userdata.DSome_lastState_out = self.state  
-                userdata.DSome_result_out = 'stop'
-                return 'Done'
+        if self.lastCommand in self.COMMANDS:
+            userdata.DSome_lastState_out = self.state
+            userdata.DSome_result_out = self.COMMANDS[self.lastCommand]
 
-        if self.lastCommand == "go foward":
-                userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'foward'
-                return 'Done'
+            return 'Done'
 
-        if self.lastCommand == "go backward":
-                userdata.DSome_lastState_out = self.state 
-                userdata.DSome_result_out = 'backward'
-                return 'Done'
-  
-        if self.lastCommand == "Rotate left":
-                userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'rotleft'    
-                return 'Done'
-
-        if self.lastCommand == "Rotate right":
-                userdata.DSome_lastState_out = self.state
-                userdata.DSome_result_out = 'rotright'    
-                return 'Done'
         else:
-            return 'Idle'
+            return 'Fail'
+
+    def request_preempt(self):
+        """Overload the preempt request method just to spew an error."""
+        smach.State.request_preempt(self)
+        rospy.logwarn("Preempted!")
+
 # main
 def main():
 
-    rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
+    '''rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)'''
 
     rospy.init_node('interpreter')
 
@@ -296,7 +287,8 @@ def main():
                                           'WConf_lastState_out': 'lastState'})
 
         smach.StateMachine.add('DoSomething', DoSomething(),
-                               transitions={'Done': 'Idle'},
+                               transitions={'Done': 'success',
+                                            'Fail': 'aborted'},
                                remapping={'DSome_lastWord_in': 'lastWord',
                                           'DSome_lastState_in': 'lastState',
                                           'DSome_lastCommand_in': 'lastCommand',
@@ -323,9 +315,10 @@ def main():
     '''asw_thread.join()'''
     asw.run_server()
 
- # Request the container to preempt
+    rospy.spin()
+
+    # Request the container to preempt
     sm.request_preempt()
 
 if __name__ == '__main__':
-    main = main()
-    rospy.spin()
+    main()

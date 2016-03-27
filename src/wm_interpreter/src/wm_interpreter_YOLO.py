@@ -35,10 +35,11 @@ class Idle(smach.State):
         self.word = ""
         self.state = "Idle"
         self.pub = rospy.Publisher('SaraVoice', String, queue_size=1)
+        self.sub = rospy.Subscriber("/recognizer_1/output", String, self.callback, queue_size=1)
         
     def execute(self, userdata):
-        global RECOGNIZER_CALLBACK
-        RECOGNIZER_CALLBACK = self.callback
+        '''global RECOGNIZER_CALLBACK
+        RECOGNIZER_CALLBACK = self.callback'''
         rospy.loginfo('Executing state Idle')
         rospy.loginfo('Idle - Waiting for keyword: SARAH')
         self.word = ""
@@ -47,10 +48,12 @@ class Idle(smach.State):
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
                 userdata.Idle_lastCommand_out = 'stop'
+                self.sub.unregister()
                 return 'Stop'
             if self.word == 'sarah':
                 userdata.Idle_lastWord_out = self.word
                 userdata.Idle_lastState_out = self.state
+                self.sub.unregister()
                 return 'Sarah'
             
     def callback(self,data): 
@@ -362,7 +365,7 @@ class DoSomething(smach.State):
 
         if self.lastCommand == "stop":
                 rospy.loginfo('publishing stop')
-                self.SayX('I will now stop')
+                self.SayX('stopping')
                 self.str_follow = 'stop'
                 userdata.DSome_lastState_out = self.state
                 self.pubFollow.publish(self.str_follow)
@@ -398,7 +401,8 @@ class DoSomething(smach.State):
 # main
 def main():
 
-    rospy.Subscriber("/recognizer_1/output", String, handleRecognizerMessage, queue_size=1)
+    rospy.init_node('interpreter')
+
     rospy.Subscriber("/objects", Float32MultiArray, handleRecognizerMessage2, queue_size=1)
 
     # Create a SMACH state machine
@@ -451,13 +455,12 @@ def main():
     smach_thread = threading.Thread(target=sm.execute)
     smach_thread.start()
 
+    smach_thread.join()
+
+    rospy.spin()
+
     # Request the container to preempt
     sm.request_preempt()
 
-    smach_thread.join()
-
-
 if __name__ == '__main__':
-    rospy.init_node('interpreter')
-    main = main()
-    rospy.spin()
+    main()
