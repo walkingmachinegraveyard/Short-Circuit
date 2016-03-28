@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<robot name="SARA">
+<!-- LINKS -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="laser_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="torso_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="head_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="neck_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="clavicule_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="fixUpperArm_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="rotUpperArm_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="fixLowerArm_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="rotLowerArm_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="gripper_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+  <!-- JOINTS -->
+
+    <joint name="spine_joint" type="prismatic">
+        <parent link="base_link"/>
+        <child link="torso_link"/>
+        <limit effort="1000.0" lower="0.8" upper="1.4" velocity="0.2"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="sternoclavicular_joint" type="revolute">
+        <parent link="torso_link"/>
+        <child link="clavicule_link"/>
+        <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
+        <origin xyz="0.2 0 1" rpy="-1.57 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="shoulder_joint" type="revolute">
+        <parent link="clavicule_link"/>
+        <child link="fixUpperArm_link"/>
+        <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
+        <origin xyz="0.2 0 0" rpy="0 -1.57 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="shoulderRot_joint" type="revolute">
+        <parent link="fixUpperArm_link"/>
+        <child link="rotUpperArm_link"/>
+        <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
+        <origin xyz="0 0.2 0" rpy="-1.57 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="elbow_joint" type="revolute">
+        <parent link="rotUpperArm_link"/>
+        <child link="fixLowerArm_link"/>
+        <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+        <origin xyz="0 0 0.2" rpy="1.57 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="WristRot_joint" type="revolute">
+        <parent link="fixLowerArm_link"/>
+        <child link="rotLowerArm_link"/>
+        <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
+        <origin xyz="0 0.2 0" rpy="-1.57 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="Wrist_joint" type="fix">
+        <parent link="rotLowerArm_link"/>
+        <child link="gripper_link"/>
+        <origin xyz="0 0.2 0" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="torsoNeck_joint" type="revolute">
+        <parent link="base_link"/>
+        <child link="neck_link"/>
+        <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
+        <origin xyz="0 0 1.1" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="neckHead_joint" type="revolute">
+        <parent link="neck_link"/>
+        <child link="head_link"/>
+        <limit effort="1000.0" lower="-1.04" upper="1.04" velocity="0.5"/>
+        <origin xyz="0 0 0" rpy="0 1.57 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+</robot>
