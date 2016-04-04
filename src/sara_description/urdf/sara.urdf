@@ -13,32 +13,87 @@
         </visual>
         <visual>
             <geometry>
-                <box size="0.65 0.55 0.70"/>
+                <box size="0.65 0.55 0.57"/>
             </geometry>
             <origin xyz="0 -0.315 0.42" rpy="0 0 0"/>
         </visual>
         <visual>
             <geometry>
-                <cylinder length="0.7" radius="0.08"/>
+                <cylinder length="0.9" radius="0.04"/>
             </geometry>
             <origin xyz="0 0 0.49" rpy="0 0 0"/>
         </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.65 0.78 0.14"/>
+            </geometry>
+            <origin xyz="0 -0.2 0.07" rpy="0 0 0"/>
+        </collision>
+        <collision>
+            <geometry>
+                <box size="0.65 0.55 0.57"/>
+            </geometry>
+            <origin xyz="0 -0.315 0.42" rpy="0 0 0"/>
+        </collision>
+
+        <inertial>
+            <mass value="10"/>
+            <origin xyz="0 0 0.42" rpy="0 0 0"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
     </link>
 
-    <link name="laser_link">
+    <link name="base_laser_link">
         <visual>
             <geometry>
                 <cylinder length="0.1" radius="0.03"/>
             </geometry>
-            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <material name="orange">
                 <color rgba="1 0.5 0 1"/>
             </material>
         </visual>
+
+        <collision>
+            <geometry>
+                <cylinder length="0.1" radius="0.03"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+
+        <inertial>
+            <mass value="0.5"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
     </link>
 
     <link name="torso_link">
         <visual>
+            <geometry>
+                <box size="0.18 0.18 0.28"/>
+            </geometry>
+            <origin xyz="0 0.01 -0.05" rpy="0 0 0"/>
+            <material name="black">
+                <color rgba="0.12 0.12 0.12 1"/>
+            </material>
+        </visual>
+        <visual>
+            <geometry>
+                <box size="0.38 0.04 0.075"/>
+            </geometry>
+            <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+        </visual>
+        <visual>
+            <geometry>
+                <cylinder length="0.5" radius="0.04"/>
+            </geometry>
+            <origin xyz="0 0 -0.4" rpy="0 0 0"/>
+            <material name="grey"/>
+        </visual>
+
+        <collision>
             <geometry>
                 <box size="0.4 0.4 0.2"/>
             </geometry>
@@ -46,30 +101,39 @@
             <material name="black">
                 <color rgba="0.12 0.12 0.12 1"/>
             </material>
-        </visual>
-        <visual>
+        </collision>
+        <collision>
             <geometry>
                 <box size="0.8 0.2 0.2"/>
             </geometry>
             <origin xyz="0 -0.1 0.1" rpy="0 0 0"/>
-        </visual>
-        <visual>
-            <geometry>
-                <sphere radius="0.2"/>
-            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="10"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-        </visual>
-        <visual>
-            <geometry>
-                <cylinder length="0.5" radius="0.08"/>
-            </geometry>
-            <origin xyz="0 0 -0.4" rpy="0 0 0"/>
-            <material name="grey"/>
-        </visual>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
     </link>
 
     <link name="head_link">
         <visual>
+            <geometry>
+                <box size="0.16 0.02 0.31"/>
+            </geometry>
+            <origin xyz="-0.05 0.07 0" rpy="0 0 0"/>
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+        </visual>
+        <visual>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+            <origin xyz="-0.04 0 0" rpy="0 0 0"/>
+        </visual>
+
+        <collision>
             <geometry>
                 <box size="0.25 0.1 0.4"/>
             </geometry>
@@ -77,25 +141,54 @@
             <material name="red">
                 <color rgba="1 0 0 1"/>
             </material>
-        </visual>
-        <visual>
+        </collision>
+        <collision>
             <geometry>
                 <sphere radius="0.2"/>
             </geometry>
+            <origin xyz="-0.1 0 0" rpy="0 0 0"/>
+        </collision>
+
+        <inertial>
+            <mass value="5"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-        </visual>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
     </link>
 
     <link name="neck_link">
          <visual>
              <geometry>
-                 <box size="0.2 0.2 0.2"/>
+                 <box size="0.11 0.11 0.11"/>
              </geometry>
-             <origin xyz="0 0 0.1" rpy="0 0 0"/>
+             <origin xyz="0 0 0.05" rpy="0 0 0"/>
              <material name="grey"/>
         </visual>
+
+        <inertial>
+            <mass value="2"/>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
     </link>
 
+    <link name="camera_link">
+        <visual>
+            <geometry>
+                <box size="0.02 0.2 0.01"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 -1.57 0"/>
+            <material name="black"/>
+        </visual>
+
+        <inertial>
+            <mass value="0.5"/>
+            <origin xyz="0 0 0" rpy="0 -1.57 0"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+
+<!--
     <link name="clavicule_link">
          <visual>
              <geometry>
@@ -129,57 +222,58 @@
     </link>
 
     <link name="rotUpperArm_link">
-        <!-- <visual>
+        S<visual>
             <geometry>
                 <cylinder length="0.6" radius="0.1"/>
             </geometry>
             <origin xyz="0 0 -0.3" rpy="0 0 0"/>
-        </visual> -->
+        </visual>
     </link>
 
     <link name="fixLowerArm_link">
-        <!-- <visual>
+        <visual>
             <geometry>
                 <cylinder length="0.6" radius="0.1"/>
             </geometry>
             <origin xyz="0 0 -0.3" rpy="0 0 0"/>
-        </visual> -->
+        </visual>
     </link>
 
     <link name="rotLowerArm_link">
-        <!-- <visual>
+        <visual>
             <geometry>
                 <cylinder length="0.6" radius="0.1"/>
             </geometry>
             <origin xyz="0 0 -0.3" rpy="0 0 0"/>
-        </visual> -->
+        </visual>
     </link>
 
     <link name="gripper_link">
-        <!--<visual>
+        <visual>
             <geometry>
                 <cylinder length="0.6" radius="0.1"/>
             </geometry>
             <origin xyz="0 0 -0.3" rpy="0 0 0"/>
-        </visual> -->
-    </link>
+        </visual>
+    </link> -->
 
   <!-- JOINTS -->
 
     <joint name="laser_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="laser_link"/>
-        <origin xyz="0 0.14 0.14" rpy="0 0 0" />
+        <child link="base_laser_link"/>
+        <origin xyz="0 0.14 0.19" rpy="0 0 1.57" />
     </joint>
 
-    <joint name="spine_joint" type="prismatic">
+    <joint name="spine_joint" type="fixed"> <!-- normaly prismatic -->
         <parent link="base_link"/>
         <child link="torso_link"/>
-        <limit effort="1000.0" lower="1" upper="1.5" velocity="0.2"/>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <axis xyz="0 0 1.4" />
+        <limit effort="1000.0" lower="0" upper="0.5" velocity="0.2"/>
+        <origin xyz="0 0 1" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
     </joint>
 
+<!--
     <joint name="sternoclavicular_joint" type="revolute">
         <parent link="torso_link"/>
         <child link="clavicule_link"/>
@@ -225,20 +319,130 @@
         <child link="gripper_link"/>
         <origin xyz="0 0 0.2" rpy="0 0 0" />
     </joint>
-
-    <joint name="torsoNeck_joint" type="revolute">
+-->
+    <joint name="torsoNeck_joint" type="fixed">  <!-- normaly revolute -->
         <parent link="torso_link"/>
         <child link="neck_link"/>
         <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
-        <origin xyz="0 0 0.2" rpy="0 0 0" />
+        <origin xyz="0 0 0.09" rpy="0 0 0" />
         <axis xyz="0 0 1" />
     </joint>
 
-    <joint name="neckHead_joint" type="revolute">
+    <joint name="neckHead_joint" type="fixed">  <!-- normaly revolute -->
         <parent link="neck_link"/>
         <child link="head_link"/>
-        <limit effort="1000.0" lower="-1.04" upper="1.04" velocity="0.5"/>
-        <origin xyz="0 0 0.2" rpy="0 1.57 0" />
+        <limit effort="1000.0" lower="-0.40" upper="1.04" velocity="0.5"/>
+        <origin xyz="0 0 0.11" rpy="0 1.57 0" />
         <axis xyz="0 0 1" />
     </joint>
+
+    <joint name="camera_joint" type="fixed">
+        <parent link="head_link"/>
+        <child link="camera_link"/>
+        <origin xyz="-0.09 0.075 0" rpy="0 3.14 -1.57" />
+        <axis xyz="0 0 1" />
+    </joint>
+
+    <gazebo reference="base_link">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <gazebo reference="torso_link">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <gazebo reference="neck_link">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <gazebo reference="head_link">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <!-- hokuyo -->
+    <gazebo reference="base_laser_link">
+        <gravity>false</gravity>
+        <sensor type="ray" name="base_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>30</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-2.3562</min_angle>
+                        <max_angle>2.3562</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.10</min>
+                    <max>30.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise parameters based on published spec for Hokuyo laser
+                    achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+                    stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+                    reading. -->
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_base_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/laser/scan</topicName>
+                <frameName>base_laser_link</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="camera_link">
+        <gravity>false</gravity>
+        <sensor type="depth" name="camera">
+            <visualize>true</visualize>
+            <pose>0 0 0 0 0 0</pose>
+            <always_on>true</always_on>
+            <update_rate>20.0</update_rate>
+            <camera>
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+                <cameraName>camera</cameraName>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>10</updateRate>
+                <imageTopicName>rgb/image_raw</imageTopicName>
+                <depthImageTopicName>depth/image_raw</depthImageTopicName>
+                <pointCloudTopicName>depth/points</pointCloudTopicName>
+                <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+                <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+                <frameName>camera/camera_rgb_optical_frame</frameName>
+                <baseline>0.1</baseline>
+                <distortion_k1>0.0</distortion_k1>
+                <distortion_k2>0.0</distortion_k2>
+                <distortion_k3>0.0</distortion_k3>
+                <distortion_t1>0.0</distortion_t1>
+                <distortion_t2>0.0</distortion_t2>
+                <pointCloudCutoff>0.4</pointCloudCutoff>
+            </plugin>
+        </sensor>
+    </gazebo>
+  <!--  <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>/cmd_vel</commandTopic>
+            <odometryTopic>/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+    </gazebo> -->
 </robot>
