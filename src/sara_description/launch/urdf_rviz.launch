@@ -1,4 +1,5 @@
 <launch>
+    <!-- CAM SETUP -->
     <arg name="camera_name" default="camera"/>
 
     <node pkg="tf" type="static_transform_publisher" name="hand_camera_calib" args="0.000 -0.020 0.000 0.000 0.000 0.000 1.000 $(arg camera_name)_link $(arg camera_name)/camera_link  100"/>
@@ -6,24 +7,12 @@
     <node pkg="tf" type="static_transform_publisher" name="camera_depth_optical_frame" args="0.000 -0.020 0.000 -0.500 0.500 -0.500 0.500 $(arg camera_name)/camera_link $(arg camera_name)/camera_depth_optical_frame 100"/>
     <node pkg="tf" type="static_transform_publisher" name="camera_rgb_frame" args="0.000 -0.045 0.000 0.000 0.000 0.000 1.000 $(arg camera_name)/camera_link $(arg camera_name)/camera_rgb_frame 100"/>
     <node pkg="tf" type="static_transform_publisher" name="camera_rgb_optical_frame" args="0.000 -0.045 0.000 -0.500 0.500 -0.500 0.500  $(arg camera_name)/camera_link $(arg camera_name)/camera_rgb_optical_frame 100"/>
-    <!-- GAZEBO -->
-    <include file="$(find sara_gazebo)/launch/sara.launch"/>
 
-    <!-- Spawn a robot into Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model sara" />
-
-    <include file="$(find wm_2dnav)/launch/move_base.launch"/>
-
-    <include file="$(find wm_odometry_feedback)/launch/wm_odometry_feedback.launch"/>
-
-     <!--
-     <node pkg="tf" type="static_transform_publisher" name="map_broadcaster" args="0 0 0 0 0 0 odom map 50" />
-     -->
-
+    <!-- RVIZ  -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 
-    <!--RVIZ  -->
+    <!-- RVIZ  -->
     <arg name="gui" default="true" />
     <arg name="rvizconfig" default="$(find sara_gazebo)/../../rviz_cfg/urdf.rviz"/>
 
@@ -31,12 +20,4 @@
     <param name="use_gui" value="$(arg gui)"/>
 
     <node name="rviz" pkg="rviz" type="rviz" args="$(arg rvizconfig)" required="true" />
-
-    <group ns="rtabmap">
-        <node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" output="screen">
-          <param name="frame_id" type="string" value="base_link"/>
-          <remap from="rgb/image" to="/camera/rgb/image_rect_color"/>
-          <param name="rgb/image_transport" type="string" value="compressed"/>
-        </node>
-    </group>
 </launch>
