@@ -17,14 +17,12 @@ TrajectoryPlannerROS:
  # goal tolerance parameters
   yaw_goal_tolerance: 0.10
   xy_goal_tolerance: 0.10
-  latch_xy_goal_tolerance: true
+  latch_xy_goal_tolerance: false
 
  # forward simulation parameters
-  sim_time: 2.0
-  sim_granularity: 0.05    # default = 0.025
+  sim_time: 1.0
+  sim_granularity: 0.025    # default = 0.025
 
- # trajectory scoring parameters
-  pdist_scale: 0.4    # default = 0.6
-  gdist_scale: 0.8    # default = 0.8
+  meter_scoring: true
    
   
