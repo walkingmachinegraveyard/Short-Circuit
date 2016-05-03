@@ -304,6 +304,15 @@ namespace kinova
 		return res;
 	}
 
+	int kinovaComm::myEraseAllTrajectories()
+	{
+		boost::recursive_mutex::scoped_lock lock(apiMutex_);
+
+		int res = kAPI_.eraseAllTrajectories();
+
+		return res;
+	}
+
 } // namespace kinova
 
 

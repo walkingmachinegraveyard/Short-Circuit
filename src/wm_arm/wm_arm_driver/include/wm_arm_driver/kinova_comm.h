@@ -41,6 +41,10 @@ namespace kinova
 
 		int myGetSensorsInfo(SensorsInfo&);
 
+		int myEraseAllTrajectories();
+
+		unsigned int getFifoCount() {return trajectoryCount_;}
+
 	private:
 		ros::NodeHandle nh_;
 		boost::recursive_mutex& apiMutex_;

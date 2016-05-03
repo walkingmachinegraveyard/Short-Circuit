@@ -143,6 +143,7 @@ add_executable(wm_arm_driver_node src/node/wm_arm_driver_node.cpp
 				src/kinova_comm.cpp
 				src/manipulator.cpp
 				src/wm_arm.cpp
+				src/execute_plan_action_server.cpp
 				)
 add_executable(plan_test_node src/test.cpp)
 

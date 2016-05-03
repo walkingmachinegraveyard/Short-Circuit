@@ -13,6 +13,7 @@
 #include "wm_arm_driver/manipulator.h"
 #include "wm_arm_driver/ik_solver.h"
 #include "wm_arm_driver/wm_arm.h"
+#include "wm_arm_driver/execute_plan_action_server.h"
 
 int main(int argc, char **argv)
 {
@@ -64,6 +65,11 @@ int main(int argc, char **argv)
 	}
 
 //	std::vector<double> homePos = manip.getJointsHome();
+
+	std::string actionName = "execute_plan";
+	nh.param("action_server_name", actionName, actionName);
+
+	manipulator::executePlanActionServer executePlanAS(nh, kComm, actionName);
 
 	manipulator::wmArm wArm(nh, kComm, opt);
 
