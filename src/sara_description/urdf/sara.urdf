@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<robot name="SARA">
+<robot name="sara">
 <!-- LINKS -->
-    <link name="base_link">
+    <link name="sara_base">
         <visual>
             <geometry>
                 <box size="0.7637 0.64311 0.14"/>
@@ -206,7 +206,7 @@
              <geometry>
                  <mesh filename="package://sara_description/meshes/1-epaule.STL" scale="0.001 0.001 0.001"/>
              </geometry>
-             <origin xyz="0 0 0" rpy="0 0 1.57"/>
+             <origin xyz="0 0 0" rpy="0 0 0"/>
          </visual>
 
         <collision>
@@ -222,14 +222,14 @@
             <geometry>
                 <mesh filename="package://sara_description/meshes/1-epaule.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="0 0 1.57"/>
+            <origin xyz="0 0 0" rpy="3.1416 0 1.5708"/>
         </visual>
 
         <collision>
             <geometry>
                 <mesh filename="package://sara_description/meshes/1-epaule.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="0 0 1.57"/>
+            <origin xyz="0 0 0" rpy="3.1416 0 1.5708"/>
         </collision>
     </link>
 
@@ -238,14 +238,14 @@
             <geometry>
                 <mesh filename="package://sara_description/meshes/3-bras_haut.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="1.57 0 1.57"/>
+            <origin xyz="0 0 0" rpy="1.5708 3.1416 3.1416"/>
         </visual>
 
         <collision>
             <geometry>
                 <mesh filename="package://sara_description/meshes/3-bras_haut.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="1.57 0 1.57"/>
+            <origin xyz="0 0 0" rpy="1.5708 3.1416 3.1416"/>
         </collision>
     </link>
 
@@ -254,14 +254,14 @@
             <geometry>
                 <mesh filename="package://sara_description/meshes/4-coude.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 -0.0005" rpy="3.1416 0 -1.57"/>
+            <origin xyz="0 0 -0.0005" rpy="3.1416 0 0"/>
         </visual>
 
         <collision>
              <geometry>
                 <mesh filename="package://sara_description/meshes/4-coude.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 -0.0005" rpy="3.1416 0 -1.57"/>
+            <origin xyz="0 0 -0.0005" rpy="3.1416 0 0"/>
         </collision>
     </link>
 
@@ -270,14 +270,14 @@
             <geometry>
                 <mesh filename="package://sara_description/meshes/5-pince-avant-bras.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
         </visual>
 
         <collision>
             <geometry>
                 <mesh filename="package://sara_description/meshes/5-pince-avant-bras.STL" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </collision>
     </link>
 
@@ -293,13 +293,13 @@
     -->
   <!-- JOINTS -->
     <joint name="laser_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="sara_base"/>
         <child link="base_laser_link"/>
         <origin xyz="0.34 0 0.19" rpy="0 0 0" />
     </joint>
 
     <joint name="base_spine_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="sara_base"/>
         <child link="spine_link"/>
         <origin xyz="0.2 0 0" rpy="0 0 0" />
         <axis xyz="0 0 1" />
@@ -317,7 +317,7 @@
         <parent link="torso_link"/>
         <child link="clavicule_link"/>
         <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
-        <origin xyz="0 -0.145 0" rpy="-1.57 0 -1.57" />
+        <origin xyz="0 -0.145 0" rpy="0 -1.57 0" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -325,7 +325,7 @@
         <parent link="clavicule_link"/>
         <child link="fixUpperArm_link"/>
         <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
-        <origin xyz="0.085 0 0" rpy="1.57 0 1.57" />
+        <origin xyz="0 -0.085 0" rpy="-1.57 0 0" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -333,7 +333,7 @@
         <parent link="fixUpperArm_link"/>
         <child link="rotUpperArm_link"/>
         <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
-        <origin xyz="0.085 0 0" rpy="0 1.57 0" />
+        <origin xyz="-0.085 0 0" rpy="1.5708 0 1.5708" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -341,7 +341,7 @@
         <parent link="rotUpperArm_link"/>
         <child link="fixLowerArm_link"/>
         <limit effort="1000.0" lower="-2.23" upper="2" velocity="0.5"/>
-        <origin xyz="0 0 0.31" rpy="3.1416 -1.57 0" />
+        <origin xyz="0 0 -0.31" rpy="-1.5708 0 0" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -349,7 +349,7 @@
         <parent link="fixLowerArm_link"/>
         <child link="rotLowerArm_link"/>
         <limit effort="1000.0" lower="-3.1416" upper="3.1416" velocity="0.5"/>
-        <origin xyz="0.0945 0 0" rpy="0 1.57 0" />
+        <origin xyz="0 0.0945 0" rpy="1.5708 0 0" />
         <axis xyz="0 0 1" />
     </joint>
     <!--
@@ -358,7 +358,7 @@
         <child link="gripper_link"/>
         <origin xyz="0 0 0.2" rpy="0 0 0" />
     </joint>
-    -->
+    -->		
     <joint name="torsoNeck_joint" type="fixed">  <!-- normaly revolute -->
         <parent link="torso_link"/>
         <child link="neck_link"/>
@@ -382,7 +382,7 @@
         <axis xyz="0 1 0" />
     </joint>
 
-    <gazebo reference="base_link">
+    <gazebo reference="sara_base">
         <gravity>false</gravity>
     </gazebo>
 
@@ -481,7 +481,7 @@
             <odometryTopic>/odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
             <odometryRate>20.0</odometryRate>
-            <robotBaseFrame>base_link</robotBaseFrame>
+            <robotBaseFrame>sara_base</robotBaseFrame>
         </plugin>
     </gazebo>
 </robot>
