@@ -4,7 +4,15 @@ project(wm_hand)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED
+    rospy
+    roscpp
+    actionlib
+    actionlib_msgs
+    message_generation
+    robotiq_ethercat
+    robotiq_s_model_control
+    )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
